@@ -21,8 +21,8 @@
     <nav class="red lighten-1" role="navigation">
       <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">AdMe</a>
         <ul class="right hide-on-med-and-down">
-          <a class="waves-effect waves-teal btn-flat">Register as User</a>
-          <a class="waves-effect waves-teal btn-flat">Register as Advetiser</a>
+           <a href="/register/user" class="waves-effect waves-teal btn-flat">Register as User</a>
+            <a href="/register/advertiser" class="waves-effect waves-teal btn-flat">Register as Advetiser</a>
         </ul>
 
 
@@ -31,42 +31,33 @@
     </nav>
     <div class="section no-pad-bot" id="index-banner">
       <div class="container">
-        <br><br>
-        <h1 class="header center orange-text">Starter Template</h1>
-        <div class="row center">
-          <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-        </div>
-        <div class="row center">
-          <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
-        </div>
-        <br><br>
-
+        <img src="/styles/native-advertising.png" alt="">
       </div>
     </div>
 
     <div class="container">
       <div class="section">
           <div class="row">
-              <form class="col s8">
+              <form class="col s8" action="/login" method="POST">
                 <div class="row center">
                   <h5 class="header col s12 light">Login</h5>
                 </div>
                 <div class="row ">
                   <div class="input-field col s12">
-                    <input id="email" type="email" class="validate">
+                    <input id="email" type="email" name="loginEmail" class="validate">
                     <label for="email">Email</label>
                   </div>
                 </div>
                 <div class="row ">
                   <div class="input-field col s12">
-                    <input id="password" type="password" class="validate">
+                    <input id="password" type="password" name="loginPassword"class="validate">
                     <label for="password">Password</label>
                   </div>
                 </div>
                 <div class="row center"
                 <div>
                   <button class="btn waves-effect waves-light red" type="submit" name="action">Login
-                    <i class="material-icons right">send</i>
+                    <i class="material-icons right">Login</i>
                   </button>
                 </div>
               </div>

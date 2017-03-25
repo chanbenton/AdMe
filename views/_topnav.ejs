@@ -26,14 +26,13 @@
       <nav>
         <div class="nav-wrapper">
           <a href="#!" class="brand-logo">AdMe</a>
-          <% if (path == "/") { %>
+          <% if (path == "/register/advertiser" || path == "/register/user") { %>
             <ul class="right hide-on-med-and-down">
-              <li><a class="waves-effect waves-light btn">Register as User</a></li>
-              <li><a class="waves-effect waves-light btn">Register as Advertiser</a></li>
+              <li><a href="/" class="waves-effect waves-teal btn-flat">Login</a></li>
             </ul>
           <% } else { %>
             <ul class="right hide-on-med-and-down">
-              <li><a class="waves-effect waves-light btn">View Your Stats and Ads</a></li>
+              <li><a href="/" class="waves-effect waves-teal btn-flat">View Stats</a></li>
             </ul>
           <% } %>
         </div>

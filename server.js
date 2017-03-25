@@ -52,6 +52,52 @@ app.get("/ad/create", (req, res) => {
   res.render("createads", templateVariable);
 });
 
+// Get request Register
+app.get("/register/user", (req, res) => {
+  let templateVariable = {path: "/register/user"};
+  res.render("registeruser", templateVariable)
+})
+
+app.get("/register/advertiser", (req, res) => {
+  let templateVariable = {path: "/register/advertiser"};
+  res.render("registeradvertiser",templateVariable)
+})
+
+// POST REQUESTS Login Register
+app.post("/register/user", (req, res) => {
+  knex('users').insert([{
+    name: req.body.userName,
+    email: req.body.userEmail,
+    password: req.body.userPassword,
+    role: 'User'
+  }])
+  .then(function(resp){
+    res.send("Registered User")
+  })
+})
+
+app.post("/register/advertiser", (req, res) => {
+  knex('users').insert([{
+    name: req.body.advName,
+    email: req.body.advEmail,
+    password: req.body.advPassword,
+    role: 'Advertiser'
+  }])
+  .then(function(resp){
+    res.send("Registered Adv")
+  })
+})
+
+app.post("/login", (req, res) => {
+  knex('users').where({
+      email: req.body.loginEmail,
+      password: req.body.loginPassword
+  })
+  .asCallback(function(err, rows){
+    console.log(rows);
+  })
+})
+
 // Stats and previous ads page for advertisers
 app.get("/users/:id/ads", (req, res) => {
   let templateVariable = {path: "/users/:id/ads"};
