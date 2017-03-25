@@ -38,10 +38,30 @@ app.use(express.static("public"));
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 
+//******************GET REQUESTS::******************
+
 // Home page
 app.get("/", (req, res) => {
-  res.render("index");
+  let templateVariable = {path: "/"};
+  res.render("index", templateVariable);
 });
+
+// Ad creation page
+app.get("/ad/create", (req, res) => {
+  let templateVariable = {path: "/ad/create"};
+  res.render("createads", templateVariable);
+});
+
+// Stats and previous ads page for advertisers
+app.get("/users/:id/ads", (req, res) => {
+  let templateVariable = {path: "/users/:id/ads"};
+
+  res.render("advads", templateVariable);
+});
+
+//******************POST REQUESTS::******************
+
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
