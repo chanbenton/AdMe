@@ -14,6 +14,7 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 
@@ -54,8 +55,23 @@ app.get("/ad/create", (req, res) => {
 
 // Stats and previous ads page for advertisers
 app.get("/users/:id/ads", (req, res) => {
-  let templateVariable = {path: "/users/:id/ads"};
 
+  // TODO: Write a query to get the data
+
+  let ads =  [12, 19, 3, 5, 2, 3];
+  // let ads =  [];
+  // knex
+  //     .select()
+  //     .from('stats')
+  //     .then((results) => {
+
+  //     })
+
+
+  let templateVariable = {
+    path: "/users/:id/ads",
+    ads: ads
+  };
   res.render("advads", templateVariable);
 });
 

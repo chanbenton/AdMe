@@ -17,7 +17,8 @@
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js'></script>
   </head>
 
   <body>
@@ -31,9 +32,13 @@
               <li><a class="waves-effect waves-light btn">Register as User</a></li>
               <li><a class="waves-effect waves-light btn">Register as Advertiser</a></li>
             </ul>
-          <% } else { %>
+          <% } else if (path == "/ad/create") { %>
             <ul class="right hide-on-med-and-down">
-              <li><a class="waves-effect waves-light btn">View Your Stats and Ads</a></li>
+              <li><a class="waves-effect waves-light btn" href="/users/:id/ads" >View Your Stats</a></li>
+            </ul>
+          <% } else if (path == "/users/:id/ads") { %>
+            <ul class="right hide-on-med-and-down">
+              <li><a class="waves-effect waves-light btn" href="/ad/create" >Create an Ad</a></li>
             </ul>
           <% } %>
         </div>
