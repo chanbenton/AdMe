@@ -52,6 +52,17 @@ app.get("/ad/create", (req, res) => {
   res.render("createads", templateVariable);
 });
 
+app.post("/ad/create", (req, res) => {
+  knex('products').insert([{
+    img_path: req.body.imgPath,
+    title: req.body.adTitle,
+    desc: req.body.adDesc
+  }])
+  .then(function(resp){
+    res.send("Ad Created and Added to DB")
+  })
+})
+
 // Get request Register
 app.get("/register/user", (req, res) => {
   let templateVariable = {path: "/register/user"};

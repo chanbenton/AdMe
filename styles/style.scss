@@ -13,10 +13,16 @@
 	font-size: inherit;
 }
 
-form.col.s8{
-  border: 1px solid black;
-}
+
 
 form.col.s12{
 
+}
+body{ margin:0px 0px; }
+
+#hero{
+  background-image: url(/Image01.jpg);
+  background-size:cover;
+  position:relative;
+  height:90vh;
 }
