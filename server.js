@@ -57,8 +57,7 @@ app.get("/ad/create", (req, res) => {
 app.get("/users/:id/ads", (req, res) => {
 
   // TODO: Write a query to get the data
-
-  let ads =  [12, 19, 3, 5, 2, 3];
+  let ads =  [12, 19];
   // let ads =  [];
   // knex
   //     .select()
