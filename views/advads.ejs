@@ -9,13 +9,15 @@
     <script>console.log(<%=ads%>)</script>
     <script>
       var ctx = document.getElementById("myChart");
+
+
       var myChart = new Chart(ctx, {
           type: 'bar',
           data: {
-              labels: ["Facebook", "Twitter"],
+              labels: ['facbook', 'twitter'],
               datasets: [{
                   label: '# of Votes',
-                  data: [<%=ads%>],
+                  data: [<%=ads %>],
                   backgroundColor: [
                       'rgba(255, 99, 132, 0.2)',
                       'rgba(54, 162, 235, 0.2)',
