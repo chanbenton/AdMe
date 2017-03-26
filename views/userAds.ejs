@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <title>AdMe</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <!-- CSS  -->
+
+    <!-- Fonts  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Compiled and minified CSS -->
@@ -16,79 +18,20 @@
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
 
-    <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <!-- CSS file to overwrite Materialize, if necessary
+    <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection" /> -->
 
   </head>
-    <body>
-      <div class="row">
-        <div class="col s4">
-          <div class="center promo promo-example">
-            <img src="/../ad_img/1" alt="Filler text!" style="width:100%;max-height:325px;> 
-            <p class="promo-caption">Google Glasses</p>
-            <p class="light center">It's...under 9000.</p>
-          </div>
-        </div>
-        <div class="col s4">
-          <div class="center promo promo-example">
-            <img src="/../ad_img/2" alt="More filler text!" style="width:100%;max-height:325px;overflow:hidden;> 
-            <p class="promo-caption">Lovely</p>
-            <p class="light center">Parody of girl laughing alone with salad</p>
-          </div>
-        </div>
-        <div class="col s4">
-          <div class="center promo promo-example">
-            <img src="/../ad_img/3" alt="If you see this without mouseover, this errored" style="max-height:325px;overflow:hidden;>
-            <p class="promo-caption">From the makers of water</p>
-            <p class="light center">comes...more water. Like, a lot. Are you looking at this?</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col s4">
-          <div class="card">
-		    <div class="card-image waves-effect waves-block waves-light">
-		      <img class="activator" src="/ad_img/1">
-		    </div>
-		    <div class="card-content">
-		      <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-		      <p><a href="#">This is a link</a></p>
-		    </div>
-		    <div class="card-reveal">
-		      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-		      <p>Would you rather learn more?</p>
-		    </div>
-		  </div>
-        </div>
-        <div class="col s4">
-          <div class="card">
-		    <div class="card-image waves-effect waves-block waves-light">
-		      <img class="activator" src="/ad_img/2" style="max-height:325px;overflow:hidden;">
-		    </div>
-		    <div class="card-content">
-		      <span class="card-title activator grey-text text-darken-4">That's hot<i class="material-icons right">more_vert</i></span>
-		      <p>Wow, is this for real?</p>
-		    </div>
-		    <div class="card-reveal">
-		      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-		      <p>Lady laughing with salad</p>
-		    </div>
-		  </div>
-        </div>
-        <div class="col s4">
-          <div class="card">
-		    <div class="card-image waves-effect waves-block waves-light">
-		      <img class="activator" src="/ad_img/3" style="height:325px;">
-		    </div>
-		    <div class="card-content">
-		      <span class="card-title activator grey-text text-darken-4">Purdy<i class="material-icons right">more_vert</i></span>
-		      <p>Like, where is this?</p>
-		    </div>
-		    <div class="card-reveal">
-		      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-		      <p>Somewhere you can't afford, go back!</p>
-		    </div>
-		  </div>
-        </div>
-      </div>
-    </body>
+
+  <body>
+    <% include partials/_topnav %>
+
+    <div class="row">
+      <% for (let each of products) { %>
+        <% include partials/_ads %>
+      <% } %>
+    </div>
+
+  </body>
+
 </html>
