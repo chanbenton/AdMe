@@ -97,6 +97,16 @@ app.get("/users/:id/ads", (req, res) => {
 });
 
 app.get("/users/:id/stats", (req, res) => {
+
+
+
+
+
+
+
+
+
+
   let templateVariable = {path: "/users/:id/stats"};
   res.render("userstats", templateVariable);
 });
