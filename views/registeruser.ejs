@@ -23,8 +23,8 @@
     <div class="row">
     <form class="col s8" action="/register/user" method="POST">
       <div class="row">
-        <div class="input-field col s6">
-          <input placeholder="Placeholder" id="first_name" name="userName" type="text" class="validate">
+        <div class="input-field col s12">
+          <input id="first_name" name="userName" type="text" class="validate">
           <label for="first_name">Name</label>
         </div>
       </div>
@@ -36,14 +36,14 @@
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="password" type="password" name="userPassword"class="validate">
-          <label for="password">Password</label>
+          <input id="email" type="email" name="userEmail"class="validate">
+          <label for="email">Email</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="email" type="email" name="userEmail"class="validate">
-          <label for="email">Email</label>
+          <input id="password" type="password" name="userPassword"class="validate">
+          <label for="password">Password</label>
         </div>
       </div>
       <button class="btn waves-effect waves-light" type="submit" name="action">Submit

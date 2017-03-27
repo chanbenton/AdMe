@@ -15,12 +15,6 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
-<<<<<<< HEAD
-// Separated Routes for each Resource
-=======
-
-// Seperated Routes for each Resource
->>>>>>> feature/charts
 const usersRoutes = require("./routes/users");
 const viewRoutes = require("./routes/view");
 
