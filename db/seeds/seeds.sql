@@ -4,9 +4,9 @@ DELETE FROM products;
 DELETE FROM users;
 
 INSERT INTO users (id,name,email,role,password) VALUES
-  (1,'pi','b@a.com','adv', 'asdf'),
-  (2,'pi','c@b.com','reg', 'asdf'),
-  (3,'pi','d@b.com','reg', 'asdf')
+  (1,'pi','b@a.com','Advertiser', 'asdf'),
+  (2,'pi','c@b.com','User', 'asdf'),
+  (3,'pi','d@b.com','User', 'asdf')
 ;
 
 INSERT INTO products (id,title,"desc",img_path) VALUES
