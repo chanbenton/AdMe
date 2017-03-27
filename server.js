@@ -116,6 +116,11 @@ app.post("/login", (req, res) => {
       password: req.body.loginPassword
   })
   .asCallback(function(err, rows){
+    if(rows[0].role == 'User'){
+      res.render('userAds')
+    }else {
+      res.render('createads')
+    }
     console.log(rows);
   })
 })
