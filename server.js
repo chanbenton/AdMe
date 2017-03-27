@@ -156,9 +156,6 @@ app.get("/users/:id/stats", (req, res) => {
 
 //******************POST REQUESTS::******************
 
-
-
->>>>>>> 4b5ac9bf291c4757ba53d6af2b3d83674d0cf1a7
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
