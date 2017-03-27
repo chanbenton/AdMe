@@ -10,28 +10,19 @@ INSERT INTO users (id,name,email,role,password) VALUES
 ;
 
 INSERT INTO products (id,title,"desc",img_path) VALUES
-  (1,'Google Glasses', 'It''s...under 9000.', '1'),
-  (2,'Google Glasses', 'It''s...under 9000.', '2'),
-  (3,'Google Glasses', 'It''s...under 9000.', '3'),
-  (4,'Google Glasses', 'It''s...under 9000.', '1'),
-  (5,'Google Glasses', 'It''s...under 9000.', '2'),
-  (6,'Google Glasses', 'It''s...under 9000.', '3')
+  (1,'Google Glasses', 'It''s...under 9000.', 1),
+  (2,'Google Glasses', 'It''s...under 9000.', 2),
+  (3,'Google Glasses', 'It''s...under 9000.', 3),
+  (4,'Google Glasses', 'It''s...under 9000.', 4)
 ;
+
+ localhost:8080/refer/?id={sl_id}
 
 INSERT INTO shared_links (id,products_id, users_id, platform, cost, click_count) VALUES
-  (1,1,1,'FB', 0.25, 10),
-  (2,1,1,'TW', 1.10, 20),
-  (3,1,1,'FB', 0.25, 10),
-  (4,1,1,'TW', 1.10, 20),
-  (5,1,1,'FB', 0.25, 10),
-  (6,1,1,'TW', 1.10, 20),
-  (7,1,1,'FB', 0.25, 10),
-  (8,1,1,'TW', 1.10, 20)
+  (1,1,1,'Facebook', 0.25, 10),
+  (2,1,1,'Twitter', 1.10, 20)
 ;
-
 INSERT INTO stats (id,sl_id,"time") VALUES
-  (DEFAULT,1, current_date),
-  (DEFAULT,2, current_date),
-  (DEFAULT,1, current_date),
-  (DEFAULT,2, current_date)
+  (1,1, current_date)
+  
 ;
