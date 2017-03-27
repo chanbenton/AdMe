@@ -12,11 +12,11 @@
      var ctx = document.getElementById("myChart");
      var value = <%-JSON.stringify(labels)%>
      var Obj={labels: value};
-     console.log(Obj.labels);
+     console.log('shutest', <%-labels%>, Obj.labels, typeof Obj.labels);
      var myChart = new Chart(ctx, {
          type: 'bar',
          data: {
-             labels: Obj.labels,
+             labels: <%-labels%>,
              datasets: [{
                  label: '# of Votes',
                  data: [<%=ads %>],
