@@ -111,10 +111,6 @@ app.post("/login", (req, res) => {
 
 // Stats and previous ads page for advertisers
 app.get("/users/:id/ads", (req, res) => {
-
- // TODO: Write a query to get the data
- //let ads =  [12, 19];
- //let ads =  [];
  var count = [];
  var platfom = []
  knex
@@ -137,25 +133,7 @@ app.get("/users/:id/ads", (req, res) => {
        console.log("PLEASE WORK",templateVariable.labels)
        res.render("advads", templateVariable);
 
-       //console.log("Does this work?", templateVariable.ads)
-             // for (var i = 0; i < results.length; i++){
-             //   var count = results[i].click_count
-             //   console.log(count);
-             // }
-       // res.render("advads", templateVariable);
-     })
-
-
- // let templateVariable = {
- //   path: "/users/:id/ads",
- //   ads: results
- // };
- // res.render("advads", templateVariable);
-});
-//******************POST REQUESTS::******************
-
-
-
+       
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
