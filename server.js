@@ -54,31 +54,31 @@ app.get("/ad/create", (req, res) => {
 });
 
 // Stats and previous ads page for advertisers
-app.get("/users/:id/ads", (req, res) => {
+// app.get("/users/:id/ads", (req, res) => {
 
-  // TODO: Write a query to get the data
-  let ads =  [12, 19];
-  //let ads =  [];
-  knex
-      .select('click_count', 'platform')
-      .from('shared_links')
-      .then((results) => {
-        console.log("This should be an array I think", results)
-        for (var i = 0; i < results.length; i++){
-          var count = results[i].click_count
-          var platfom = results[i].platform
+//   // TODO: Write a query to get the data
+//   let ads =  [12, 19];
+//   //let ads =  [];
+//   knex
+//       .select('click_count', 'platform')
+//       .from('shared_links')
+//       .then((results) => {
+//         console.log("This should be an array I think", results)
+//         for (var i = 0; i < results.length; i++){
+//           var count = results[i].click_count
+//           var platfom = results[i].platform
 
-          console.log("HELLO", count);
-          console.log("HELLO ARRAY OF OBJECTS", platfom);
-        }
-        console.log("this is the real count", count);
-        let templateVariable = {
-          path: "/users/:id/ads",
-          ads: ads
-          //ads: count,
-          //labels: platfom
-        }
-        res.render("advads", templateVariable);
+//           console.log("HELLO", count);
+//           console.log("HELLO ARRAY OF OBJECTS", platfom);
+//         }
+//         console.log("this is the real count", count);
+//         let templateVariable = {
+//           path: "/users/:id/ads",
+//           ads: ads
+//           //ads: count,
+//           //labels: platfom
+//         }
+//         res.render("advads", templateVariable);
 
         //console.log("Does this work?", templateVariable.ads)
               // for (var i = 0; i < results.length; i++){
@@ -86,15 +86,15 @@ app.get("/users/:id/ads", (req, res) => {
               //   console.log(count);
               // }
         // res.render("advads", templateVariable);
-      })
+//       })
 
 
-  // let templateVariable = {
-  //   path: "/users/:id/ads",
-  //   ads: results
-  // };
-  // res.render("advads", templateVariable);
-});
+//   // let templateVariable = {
+//   //   path: "/users/:id/ads",
+//   //   ads: results
+//   // };
+//   // res.render("advads", templateVariable);
+// });
 
 app.get("/users/:id/stats", (req, res) => {
 
