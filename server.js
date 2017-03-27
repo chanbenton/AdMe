@@ -2,18 +2,18 @@
 
 require('dotenv').config();
 
-const PORT        = process.env.PORT || 8080;
-const ENV         = process.env.ENV || "development";
-const express     = require("express");
-const bodyParser  = require("body-parser");
-const sass        = require("node-sass-middleware");
-const app         = express();
+const PORT = process.env.PORT || 8080;
+const ENV = process.env.ENV || "development";
+const express = require("express");
+const bodyParser = require("body-parser");
+const sass = require("node-sass-middleware");
+const app = express();
 // const cookieSession = require('cookie-session');
 
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
+const knexConfig = require("./knexfile");
+const knex = require("knex")(knexConfig[ENV]);
+const morgan = require('morgan');
+const knexLogger = require('knex-logger');
 
 
 const usersRoutes = require("./routes/users");
@@ -37,7 +37,9 @@ app.use(morgan('dev'));
 app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -54,76 +56,85 @@ app.use("/view", viewRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
-  let templateVariable = {path: "/"};
+  let templateVariable = {
+    path: "/"
+  };
   res.render("index", templateVariable);
 });
 
 // Ad creation page
 app.get("/ad/create", (req, res) => {
-  let templateVariable = {path: "/ad/create"};
+  let templateVariable = {
+    path: "/ad/create"
+  };
   res.render("createads", templateVariable);
 });
 
 app.post("/ad/create", (req, res) => {
   knex('products').insert([{
-    img_path: req.body.imgPath,
-    title: req.body.adTitle,
-    desc: req.body.adDesc
-  }])
-  .then(function(resp){
-    res.send("Ad Created and Added to DB")
-  })
+      img_path: req.body.imgPath,
+      title: req.body.adTitle,
+      desc: req.body.adDesc
+    }])
+    .then(function(resp) {
+      res.send("Ad Created and Added to DB")
+    })
 })
 
 // Get request Register
 app.get("/register/user", (req, res) => {
-  let templateVariable = {path: "/register/user"};
+  let templateVariable = {
+    path: "/register/user"
+  };
   res.render("registeruser", templateVariable)
 })
 
 app.get("/register/advertiser", (req, res) => {
-  let templateVariable = {path: "/register/advertiser"};
-  res.render("registeradvertiser",templateVariable)
+  let templateVariable = {
+    path: "/register/advertiser"
+  };
+  res.render("registeradvertiser", templateVariable)
 })
 
 // POST REQUESTS Login Register
 app.post("/register/user", (req, res) => {
   knex('users').insert([{
-    name: req.body.userName,
-    email: req.body.userEmail,
-    password: req.body.userPassword,
-    role: 'User'
-  }])
-  .then(function(resp){
-    res.send("Registered User")
-  })
+      name: req.body.userName,
+      email: req.body.userEmail,
+      password: req.body.userPassword,
+      role: 'User'
+    }])
+    .then(function(resp) {
+      res.send("Registered User")
+    })
 })
 
 app.post("/register/advertiser", (req, res) => {
   knex('users').insert([{
-    name: req.body.advName,
-    email: req.body.advEmail,
-    password: req.body.advPassword,
-    role: 'Advertiser'
-  }])
-  .then(function(resp){
-    res.send("Registered Adv")
-  })
+      name: req.body.advName,
+      email: req.body.advEmail,
+      password: req.body.advPassword,
+      role: 'Advertiser'
+    }])
+    .then(function(resp) {
+      res.send("Registered Adv")
+    })
 })
 
 app.post("/login", (req, res) => {
   knex('users').where({
       email: req.body.loginEmail,
       password: req.body.loginPassword
-  })
-  .asCallback(function(err, rows){
-    console.log(rows);
-  })
+    })
+    .asCallback(function(err, rows) {
+      console.log(rows);
+    })
 })
 
 // Stats and previous ads page for advertisers
 
 app.get("/users/:id/ads", (req, res) => {
+
  var count = [];
  var platfom = []
  knex
@@ -148,8 +159,11 @@ app.get("/users/:id/ads", (req, res) => {
       })
 })
 
+
 app.get("/users/:id/stats", (req, res) => {
-  let templateVariable = {path: "/users/:id/stats"};
+  let templateVariable = {
+    path: "/users/:id/stats"
+  };
   res.render("userstats", templateVariable);
 });
 
