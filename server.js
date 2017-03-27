@@ -15,7 +15,12 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+<<<<<<< HEAD
 // Separated Routes for each Resource
+=======
+
+// Seperated Routes for each Resource
+>>>>>>> feature/charts
 const usersRoutes = require("./routes/users");
 const viewRoutes = require("./routes/view");
 
@@ -122,6 +127,7 @@ app.post("/login", (req, res) => {
 })
 
 // Stats and previous ads page for advertisers
+
 app.get("/users/:id/ads", (req, res) => {
 
  // TODO: Write a query to get the data
@@ -164,6 +170,24 @@ app.get("/users/:id/ads", (req, res) => {
  // };
  // res.render("advads", templateVariable);
 });
+
+app.get("/users/:id/stats", (req, res) => {
+
+
+
+
+
+
+
+
+
+
+  let templateVariable = {path: "/users/:id/stats"};
+  res.render("userstats", templateVariable);
+});
+
+
+
 //******************POST REQUESTS::******************
 
 
