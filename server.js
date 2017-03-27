@@ -145,7 +145,8 @@ app.get("/users/:id/ads", (req, res) => {
        }
        console.log("PLEASE WORK",templateVariable.labels)
        res.render("advads", templateVariable);
-
+      })
+})
 
 app.get("/users/:id/stats", (req, res) => {
   let templateVariable = {path: "/users/:id/stats"};

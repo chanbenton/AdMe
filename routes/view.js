@@ -12,7 +12,7 @@ module.exports = (knex) => {
       .then((results) => {
         let templateVars = {
           products: results,
-          path: "asdf"
+          path: "/view"
         }
         res.render("userAds", templateVars);
       });
