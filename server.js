@@ -15,7 +15,7 @@ const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
-// Separated Routes for each Resource
+
 const usersRoutes = require("./routes/users");
 const viewRoutes = require("./routes/view");
 
@@ -122,11 +122,8 @@ app.post("/login", (req, res) => {
 })
 
 // Stats and previous ads page for advertisers
-app.get("/users/:id/ads", (req, res) => {
 
- // TODO: Write a query to get the data
- //let ads =  [12, 19];
- //let ads =  [];
+app.get("/users/:id/ads", (req, res) => {
  var count = [];
  var platfom = []
  knex
@@ -149,25 +146,19 @@ app.get("/users/:id/ads", (req, res) => {
        console.log("PLEASE WORK",templateVariable.labels)
        res.render("advads", templateVariable);
 
-       //console.log("Does this work?", templateVariable.ads)
-             // for (var i = 0; i < results.length; i++){
-             //   var count = results[i].click_count
-             //   console.log(count);
-             // }
-       // res.render("advads", templateVariable);
-     })
 
-
- // let templateVariable = {
- //   path: "/users/:id/ads",
- //   ads: results
- // };
- // res.render("advads", templateVariable);
+app.get("/users/:id/stats", (req, res) => {
+  let templateVariable = {path: "/users/:id/stats"};
+  res.render("userstats", templateVariable);
 });
+
+
+
 //******************POST REQUESTS::******************
 
 
 
+>>>>>>> 4b5ac9bf291c4757ba53d6af2b3d83674d0cf1a7
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
