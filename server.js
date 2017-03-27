@@ -64,6 +64,17 @@ app.get("/ad/create", (req, res) => {
   res.render("createads", templateVariable);
 });
 
+app.post("/ad/create", (req, res) => {
+  knex('products').insert([{
+    img_path: req.body.imgPath,
+    title: req.body.adTitle,
+    desc: req.body.adDesc
+  }])
+  .then(function(resp){
+    res.send("Ad Created and Added to DB")
+  })
+})
+
 // Get request Register
 app.get("/register/user", (req, res) => {
   let templateVariable = {path: "/register/user"};
@@ -112,11 +123,47 @@ app.post("/login", (req, res) => {
 
 // Stats and previous ads page for advertisers
 app.get("/users/:id/ads", (req, res) => {
-  let templateVariable = {path: "/users/:id/ads"};
 
-  res.render("advads", templateVariable);
+ // TODO: Write a query to get the data
+ //let ads =  [12, 19];
+ //let ads =  [];
+ var count = [];
+ var platfom = []
+ knex
+     .select('click_count', 'platform')
+     .from('shared_links')
+     .then((results) => {
+       console.log("This should be an array I think", results)
+       for (var i = 0; i < results.length; i++){
+        count.push(results[i].click_count)
+        platfom.push(results[i].platform);
+        console.log("HELLO", count);
+        console.log("HELLO ARRAY OF OBJECTS", platfom);
+       }
+       console.log("this is the real count", count);
+       let templateVariable = {
+         path: "/users/:id/ads",
+         ads: count,
+         labels: JSON.stringify(platfom)
+       }
+       console.log("PLEASE WORK",templateVariable.labels)
+       res.render("advads", templateVariable);
+
+       //console.log("Does this work?", templateVariable.ads)
+             // for (var i = 0; i < results.length; i++){
+             //   var count = results[i].click_count
+             //   console.log(count);
+             // }
+       // res.render("advads", templateVariable);
+     })
+
+
+ // let templateVariable = {
+ //   path: "/users/:id/ads",
+ //   ads: results
+ // };
+ // res.render("advads", templateVariable);
 });
-
 //******************POST REQUESTS::******************
 
 

@@ -13,10 +13,28 @@
 	font-size: inherit;
 }
 
+#form-login{
+  display: block;
+  text-align: center;
+}
+
 form.col.s8{
-  border: 1px solid black;
+  width: 100%;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+
 }
 
 form.col.s12{
 
+}
+body{ margin:0px 0px; }
+
+#hero{
+  background-image: url(/Image01.jpg);
+  background-size:contain;
+  position:relative;
+  height:90vh;
 }
