@@ -181,7 +181,9 @@ app.get("/users/:id/stats", (req, res) => {
 
 
 
-  let templateVariable = {path: "/users/:id/stats"};
+  let templateVariable = {
+    path: "/users/:id/stats",
+  };
   res.render("userstats", templateVariable);
 });
 
