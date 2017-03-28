@@ -53,7 +53,13 @@ module.exports = (knex) => {
     })
     .asCallback(function(err, rows){
       req.session.userId = rows[0].id
-      console.log(rows[0].id);
+      if(rows[0].role == 'User'){
+        res.render('userAds')
+      } else {
+        res.render('createads')
+      }
+
+      console.log(rows[0].id, rows[0].role);
     })
   })
 
