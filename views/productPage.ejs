@@ -8,7 +8,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-    
+
     <!-- Fonts  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -23,14 +23,22 @@
   </head>
 
   <body>
-    <% include partials/_topnav %>
-
+    <%- include partials/_topnav %>
     <div class="row">
-      <% for (let each of products) { %>
-        <% include partials/_ads %>
-      <% } %>
+      <div class="col s4" >
+        <img src="/ad_img/<%= product.img_path %>" style="height:325px;">
+      </div>
+      <div class="col s8">
+        <dl>
+          <dt>Name</dt>
+          <dd><%= product.title %></dd>
+          <dt>Description</dt>
+          <dd><%= product.desc %></dd>
+        </dl>
+        <a href="/views/<%= product.id %>/share/fb"></a>
+        <a href="/views/<%= product.id %>/share/tw"></a>
+      </div>
     </div>
 
   </body>
-
 </html>

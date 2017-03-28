@@ -12,38 +12,32 @@ module.exports = (knex) => {
       .then((results) => {
         let templateVars = {
           products: results,
-          path: "/view"
+          path: "asdf"
         }
+
         res.render("userAds", templateVars);
       });
   });
+  
+  routes.get("/:product_id", (req, res) => {
+    var p_id = req.params.product_id;
+    knex("products")
+      .select("*")
+      .where({ id: p_id })
+      .then((results) => {
+        let templateVars = {
+          product: results[0],
+          path: "asdf"
+        }
+        console.log(results[0]);
+        if (results.length > 0){
+          res.render("productPage", templateVars);
+        } else {
+          res.sendStatus(500);
+        }
+
+      });
+  });
+
   return routes;
 }
-
-  // food.post("/inventory", (req, res) => {
-  //   let userId = req.session.user_id;
-  //   if (!userId) {
-  //     return res.redirect("/");
-  //   }
-
-  //   let curFood = req.body["food-item"];
-  //   knex.select("id").from("ingredients").where({ name: curFood })
-  //     .then((result) => {
-  //       return knex('inventory')
-  //         .where({
-  //           userId: userId,
-  //           ingId: result[0].id
-  //         })
-  //         .update({
-  //           pend: 0,
-  //           qty: 1
-  //         })
-  //     })
-  //     .then(() => {
-  //       res.status(200).send();
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       res.sendStatus(500);
-  //     });
-  // });
