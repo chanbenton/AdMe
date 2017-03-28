@@ -54,7 +54,7 @@ module.exports = (knex) => {
     .asCallback(function(err, rows){
       req.session.userId = rows[0].id
       if(rows[0].role == 'User'){
-        res.render('userAds')
+        res.redirect('/view')
       } else {
         res.render('createads')
       }
