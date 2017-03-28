@@ -63,6 +63,7 @@ app.get("/ad/create", (req, res) => {
 
 app.post("/ad/create", (req, res) => {
   knex('products').insert([{
+
       img_path: req.body.imgPath,
       title: req.body.adTitle,
       desc: req.body.adDesc
@@ -70,6 +71,7 @@ app.post("/ad/create", (req, res) => {
     .then(function(resp) {
       res.send("Ad Created and Added to DB")
     })
+
 })
 
 // Stats and previous ads page for advertisers
@@ -102,9 +104,11 @@ app.get("/users/:id/ads", (req, res) => {
 });
 
 
+
 app.get("/users/:id/stats", (req, res) => {
   let templateVariable = {
     path: "/users/:id/stats"
+
   };
   res.render("userstats", templateVariable);
 });
