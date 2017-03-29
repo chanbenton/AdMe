@@ -11,9 +11,6 @@
    <!-- <script>console.log(<%=labels.platfom%>)</script> -->
    <script>
      var ctx = document.getElementById("myChart");
-     var value = <%-JSON.stringify(labels)%>
-     var Obj={labels: value};
-     console.log('shutest', <%-labels%>, Obj.labels, typeof Obj.labels);
      var myChart = new Chart(ctx, {
          type: 'bar',
          data: {
@@ -53,4 +50,3 @@
    </script>
  </body>
 </html>
-
