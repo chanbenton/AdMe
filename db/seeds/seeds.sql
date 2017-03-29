@@ -9,14 +9,12 @@ INSERT INTO users (id,name,email,role,password) VALUES
   (3,'pi','d@b.com','User', 'asdf')
 ;
 
-INSERT INTO products (id,title,"desc",img_path) VALUES
-  (1,'Google Glasses', 'It''s...under 9000.', 1),
-  (2,'Google Glasses', 'It''s...under 9000.', 2),
-  (3,'Google Glasses', 'It''s...under 9000.', 3),
-  (4,'Google Glasses', 'It''s...under 9000.', 4)
+INSERT INTO products (id,title,"desc",img_path, creator_uid) VALUES
+  (1,'Google Glasses', 'It''s...under 9000.', 1, 1),
+  (2,'Google Glasses', 'It''s...under 9000.', 2, 1),
+  (3,'Google Glasses', 'It''s...under 9000.', 3, 1),
+  (4,'Google Glasses', 'It''s...under 9000.', 4, 1)
 ;
-
- localhost:8080/refer/?id={sl_id}
 
 INSERT INTO shared_links (id,products_id, users_id, platform, cost, click_count) VALUES
   (1,1,1,'Facebook', 0.25, 10),
@@ -24,5 +22,5 @@ INSERT INTO shared_links (id,products_id, users_id, platform, cost, click_count)
 ;
 INSERT INTO stats (id,sl_id,"time") VALUES
   (1,1, current_date)
-  
+
 ;
