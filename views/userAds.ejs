@@ -6,9 +6,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
 
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
     <!-- Fonts  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -24,7 +23,11 @@
   </head>
 
   <body>
-    <% include _topnav %>
+    <% include partials/_topnav %>
+
+    <%# if user.role = 'admin' %>
+    <!-- "Title, h2(?): Your produced ads-->
+    <%# end here %>
 
     <div class="row">
       <% for (let each of products) { %>

@@ -20,7 +20,7 @@ INSERT INTO shared_links (id,products_id, users_id, platform, cost, click_count)
   (1,1,1,'Facebook', 0.25, 10),
   (2,1,1,'Twitter', 1.10, 20)
 ;
+
 INSERT INTO stats (id,sl_id,"time") VALUES
   (1,1, current_date)
-
 ;
