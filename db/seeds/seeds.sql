@@ -10,17 +10,17 @@ INSERT INTO users (id,name,email,role,password) VALUES
 ;
 
 INSERT INTO products (id,title,"desc",img_path) VALUES
-  (1,'Google Glasses', 'It''s...under 9000.', 1),
-  (2,'Google Glasses', 'It''s...under 9000.', 2),
-  (3,'Google Glasses', 'It''s...under 9000.', 3),
-  (4,'Google Glasses', 'It''s...under 9000.', 4)
+  (1,'Google Glass', 'It''s...under 9000.', 1),
+  (2,'Google Glass', 'It''s...under 9000.', 2),
+  (3,'Google Glass', 'It''s...under 9000.', 3),
+  (4,'Google Glass', 'It''s...under 9000.', 4)
 ;
 
 INSERT INTO shared_links (id,products_id, users_id, platform, cost, click_count) VALUES
   (1,1,1,'Facebook', 0.25, 10),
-  (2,1,1,'Twitter', 1.10, 20),
+  (2,1,1,'Twitter', 1.10, 20)
 ;
+
 INSERT INTO stats (id,sl_id,"time") VALUES
   (1,1, current_date)
-  
 ;
