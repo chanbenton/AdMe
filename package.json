@@ -30,9 +30,11 @@
     "node-pre-gyp": "^0.6.34",
     "node-sass": "^4.5.1",
     "node-sass-middleware": "^0.9.8",
-    "pg": "^6.0.2"
+    "pg": "^6.0.2",
+    "canvas": "git://github.com/elspoono/node-canvas-heroku.git"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "canvas": "~0.8.1"
   }
 }
