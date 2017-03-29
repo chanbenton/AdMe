@@ -18,7 +18,7 @@ window.fbAsyncInit = function() {
 
 $(document).ready(() => {
   document.getElementById('fb').onclick = function() {
-    FB.init({ appId: `your appid`, status: true, cookie: true, version:'v2.8'});
+    FB.init({ appId: `267633323688936`, status: true, cookie: true, version:'v2.8'});
     FB.ui({
       method: 'share',
       display: 'popup',
