@@ -10,40 +10,31 @@ module.exports = (knex) => {
     knex("products")
       .select("*")
       .then((results) => {
+        console.log(results);
         let templateVars = {
-          products: results,
+          products: results.reverse(),
           path: "/view"
         }
         res.render("userAds", templateVars);
       });
   });
+
+  routes.get("/stats", (req, res) => {
+      // let userId = req.session_userId
+      // if (!userId)
+    knex("products")
+      .join('shared_links', 'products.id', '=', 'shared_links.products_id')
+      .select("*")
+      .where('shared_links.users_id', '=', req.session.userId)
+      .then((results) => {
+        console.log(results);
+        let templateVars = {
+          products: results.reverse(),
+          path: "/view/stats"
+        }
+        res.render("userstats", templateVars);
+      });
+  });
+
   return routes;
 }
-
-  // food.post("/inventory", (req, res) => {
-  //   let userId = req.session.user_id;
-  //   if (!userId) {
-  //     return res.redirect("/");
-  //   }
-
-  //   let curFood = req.body["food-item"];
-  //   knex.select("id").from("ingredients").where({ name: curFood })
-  //     .then((result) => {
-  //       return knex('inventory')
-  //         .where({
-  //           userId: userId,
-  //           ingId: result[0].id
-  //         })
-  //         .update({
-  //           pend: 0,
-  //           qty: 1
-  //         })
-  //     })
-  //     .then(() => {
-  //       res.status(200).send();
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       res.sendStatus(500);
-  //     });
-  // });

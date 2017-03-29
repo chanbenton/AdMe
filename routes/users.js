@@ -58,8 +58,6 @@ module.exports = (knex) => {
       } else {
         res.render('createads')
       }
-
-      console.log(rows[0].id, rows[0].role);
     })
   })
 

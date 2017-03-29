@@ -10,16 +10,16 @@
 
     <div class="row">
 
-    <form class="col s12" action="/ad/create" method="POST">
+    <form class="col s12" action="/ad/create" method="POST" enctype="multipart/form-data">
 
     <div class="col s12 m4 l8">
           <div class="file-field input-field">
             <div class="btn">
               <span>File</span>
-              <input type="file">
+              <input type="file" name="Image">
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" name="imgPath">
+              <input class="file-path validate" type="text" name="imgPath" >
             </div>
           </div>
     </div>

@@ -25,20 +25,20 @@
   </head>
 
   <body>
-
-   <div class="navbar-fixed">
-      <nav>
-        <div class="nav-wrapper">
+    <nav class="red lighten-1" role="navigation">
+        <div class="nav-wrapper container">
           <a href="/" class="brand-logo">AdMe</a>
           <% if (path == "/register/advertiser" || path == "/register/user") { %>
+            <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
             <ul class="right hide-on-med-and-down">
+              <li><a href="/" class="waves-effect waves-teal btn-flat">Login</a></li>
+            </ul>
+            <ul class="side-nav" id="mobile-demo">
               <li><a href="/" class="waves-effect waves-teal btn-flat">Login</a></li>
             </ul>
           <% } else if (path == "/ad/create") { %>
             <ul class="right hide-on-med-and-down">
-
               <li><a class="waves-effect waves-light btn" href="/users/:id/ads" >View Your Stats</a></li>
-
             </ul>
           <% } else if (path == "/users/:id/ads") { %>
             <ul class="right hide-on-med-and-down">
@@ -49,11 +49,10 @@
 
           <% } else if (path == "/view") { %>
             <ul class="right hide-on-med-and-down">
-              <li><a class="waves-effect waves-light btn" href="/users/:id/stats" >View Stats</a></li>
+              <li><a class="waves-effect waves-light btn" href="/view/stats" >View Stats</a></li>
             </ul>
           <% } %>
         </div>
-      </nav>
-    </div>
+  </nav>
   </body>
 </html>

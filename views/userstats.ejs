@@ -29,80 +29,11 @@
     <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
   </div>
 
-  <div class="container">
-    <div class="container portfolio">
-      <h5>Your Ads</h5>
-      <hr>
-      <div class="row">
-        <div class="col s12 m12 l12 portfolio-holder" >
-            <div class="card">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="https://i.ytimg.com/vi/9_sJGzw5Bew/maxresdefault.jpg">
-              </div>
-              <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                <p><a href="https://www.youtube.com/watch?v=A1dAs0aWas8">This is a link</a></p>
-              </div>
-              <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                <p>I'm not a rapper. So stop rappin at me.</p>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="https://i.ytimg.com/vi/9_sJGzw5Bew/maxresdefault.jpg">
-              </div>
-              <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                <p><a href="https://www.youtube.com/watch?v=A1dAs0aWas8">This is a link</a></p>
-              </div>
-              <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                <p>I'm not a rapper. So stop rappin at me.</p>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="https://i.ytimg.com/vi/9_sJGzw5Bew/maxresdefault.jpg">
-              </div>
-              <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                <p><a href="https://www.youtube.com/watch?v=A1dAs0aWas8">This is a link</a></p>
-              </div>
-              <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                <p>I'm not a rapper. So stop rappin at me.</p>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="https://i.ytimg.com/vi/9_sJGzw5Bew/maxresdefault.jpg">
-              </div>
-              <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                <p><a href="https://www.youtube.com/watch?v=A1dAs0aWas8">This is a link</a></p>
-              </div>
-              <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                <p>I'm not a rapper. So stop rappin at me.</p>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="https://i.ytimg.com/vi/9_sJGzw5Bew/maxresdefault.jpg">
-              </div>
-              <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-                <p><a href="https://www.youtube.com/watch?v=A1dAs0aWas8">This is a link</a></p>
-              </div>
-              <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-                <p>I'm not a rapper. So stop rappin at me.</p>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
+
+  <div class="row">
+    <% for (let each of products) { %>
+      <% include partials/_ads %>
+    <% } %>
   </div>
 
   </body>
