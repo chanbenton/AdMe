@@ -22,14 +22,11 @@ module.exports = (knex) => {
 
 
   routes.get("/stats", (req, res) => {
-      // let userId = req.session_userId
-      // if (!userId)
     knex("products")
       .join('shared_links', 'products.id', '=', 'shared_links.products_id')
       .select("*")
       .where('shared_links.users_id', '=', req.session.userId)
       .then((results) => {
-        console.log(results);
         let templateVars = {
           products: results.reverse(),
           path: "/view/stats"
@@ -39,14 +36,14 @@ module.exports = (knex) => {
   });
 
 
-  routes.get("/:product_id", (req, res) => {
+  routes.get("/ads/:product_id", (req, res) => {
     let p_id = req.params.product_id;
     knex("products")
+      .join('shared_links', 'products.id', '=', 'shared_links.products_id' )
       .select("*")
-      .where({ id: p_id })
+      .where( 'shared_links.products_id', '=', p_id)
       .then((results) => {
         let product = results[0];
-
         let facebook_url = "http://www.facebook.com/dialog/feed/?app_id="
         let app_id = 267633323688936;
         let name = product.title;
@@ -59,7 +56,6 @@ module.exports = (knex) => {
           path: fb_path,
           path2: "asdf"
         }
-        console.log(results[0]);
         if (results.length > 0){
           res.render("productPage", templateVars);
         } else {
