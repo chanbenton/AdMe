@@ -63,5 +63,11 @@ module.exports = (knex) => {
     })
   })
 
+  router.post("/logout", (req,res) =>{
+    req.session = null;
+    res.redirect("/");
+  })
+
+
   return router;
 }

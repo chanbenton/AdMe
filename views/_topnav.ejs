@@ -45,11 +45,36 @@
               <li><a class="waves-effect waves-light btn" href="/ad/create" >Create an Ad</a></li>
             </ul>
           <% } else if (path == "/users/:id/stats") { %>
+              <div class="container">
+              <ul id="slide-out" class="side-nav">
+                <li>
+                  <div class="background">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/e/e0/Iron_Man_bleeding_edge.jpg">
+                  </div>
+                </li>
+
+                <li><a href="#!name"><span class="name"><%= name %></span></a></li>
+                <li><a href="#!email"><span class="email"><%= email %></span></a></li>
+                <li><div class="divider"></div></li>
+                <li><a class="subheader">Your Earnings</a></li>
+                <li><a class="waves-effect" href="#!">You made <%= moolah %>!!</a></li>
+                <li><div class="divider"></div></li>
+                <li><a href="/view" class="waves-effect waves-light btn">Share More Ads</a></li>
+                <li><div class="divider"></div></li>
+                <li><form method="POST" action="/logout"><a href="/" class="waves-effect waves-light btn">Logout</a></form></li>
+              </ul>
+
+              <div><a href="#" data-activates="slide-out" class="button-collapse show-on-large left hide-on-med-and-down"><i class="material-icons">menu</i></a></div>
+
+
+              </div>
+
 
 
           <% } else if (path == "/view") { %>
             <ul class="right hide-on-med-and-down">
-              <li><a class="waves-effect waves-light btn" href="/view/stats" >View Prof-----</a></li>
+              <li><a class="waves-effect waves-light btn" href="/users/:id/stats" >View Profile</a></li>
+              <li><form method="POST" action="/logout"><button class="waves-effect waves-light btn" >Logout</button></form></li>
             </ul>
           <% } %>
         </div>
