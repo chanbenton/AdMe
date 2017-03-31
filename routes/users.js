@@ -6,13 +6,18 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   router.get("/register/user", (req, res) => {
-    let templateVariable = {path: "/register/user"};
-    res.render("registeruser", templateVariable)
+  let templateVars = {
+      loggedUser: 'notLogged'
+    }
+    console.log(templateVars);
+    res.render("registeruser", templateVars)
   });
 
   router.get("/register/advertiser", (req, res) => {
-    let templateVariable = {path: "/register/advertiser"};
-    res.render("registeradvertiser",templateVariable)
+  let templateVars = {
+      loggedUser: 'notLogged'
+    }
+    res.render("registeradvertiser", templateVars)
   });
 
   router.post("/register/user", (req, res) => {
@@ -24,7 +29,7 @@ module.exports = (knex) => {
     }, 'id')
     .then(function(resp){
       req.session.userId = resp[0];
-      res.send("Registered User")
+      res.redirect("/view")
     })
   });
 
@@ -43,25 +48,22 @@ module.exports = (knex) => {
 
   router.get("/", (req, res) => {
     let templateVariable = {path: "/"};
-    res.render("index", templateVariable);
+    res.render("index");
   });
 
   router.post("/login", (req, res) => {
-    console.log(req.body);
     knex('users').where({
         email: req.body.loginEmail,
         password: req.body.loginPassword
     })
     .asCallback(function(err, rows){
-      console.log(rows);
-      req.session.userId = rows[0].id
-      if(rows[0].role == 'User'){
-        res.redirect('/view')
-      } else {
-        res.render('createads')
+      let templateVars = {
+        loggedUser : rows[0]
       }
-    })
-  })
+      req.session.userId = rows[0].id
+      res.redirect('/view')
+    });
+  });
 
   router.post("/logout", (req,res) =>{
     req.session = null;

@@ -65,10 +65,18 @@ app.use("/view", viewRoutes(knex));
 
 // Ad creation page
 app.get("/ad/create", (req, res) => {
-  let templateVariable = {
-    path: "/ad/create"
-  };
-  res.render("createads", templateVariable);
+  knex('users')
+    .select('role')
+    .where({
+      id: req.session.userId
+    })
+    .then(function(resp){
+      console.log(resp);
+      let templateVariable = {
+        loggedUser: resp[0]
+      };
+      res.render("createads", templateVariable);
+    })
 });
 
 app.post("/ad/create", upload.single('Image'), (req, res) => {
@@ -77,7 +85,8 @@ app.post("/ad/create", upload.single('Image'), (req, res) => {
   knex('products').insert([{
       img_path: req.file.filename,
       title: req.body.adTitle,
-      desc: req.body.adDesc
+      desc: req.body.adDesc,
+      creator_uid: req.session.userId
     }])
     .then(function(resp) {
       res.send("Ad Created and Added to DB")
@@ -100,7 +109,7 @@ app.get("/users/:id/ads", (req, res) => {
         platfom.push(results[i].platform);
        }
        let templateVariable = {
-         path: "/users/:id/ads",
+         loggedUser: 'Advertiser',
          ads: count,
          labels: JSON.stringify(platfom)
        }

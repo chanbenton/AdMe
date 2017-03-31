@@ -1,17 +1,17 @@
-<div class="col s4">
+<div class="col s3">
   <div class="card">
     <div class="card-image waves-effect waves-block waves-light" style="height:325px;">
-      <a href="view/ads/<%= each.id %>"><img class="activator" src="/ad_img/<%= each.img_path %>">
+      <a href="view/ads/<%= each.id %>"><img class="activator" src="/ad_img/<%= each.img_path %>"></a>
     </div>
     <div class="card-content">
       <!-- expand_less points up, even though this button expands MORE-->
       <span class="card-title activator grey-text text-darken-4"><%= each.title %><i class="material-icons right">expand_less</i></span>
-      <p><%= each.desc %></p>
+
     </div>
     <div class="card-reveal">
       <!-- expand_more points down, even though this button expands LESS-->
       <span class="card-title grey-text text-darken-4"><%= each.title %><i class="material-icons right">expand_more</i></span>
-      <p>Share icons will be inserted here</p>
+        <p><%= each.desc %></p>
     </div>
   </div>
 </div>

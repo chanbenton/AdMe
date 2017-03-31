@@ -2,13 +2,17 @@
   <nav>
     <div class="nav-wrapper">
       <a href="#!" class="brand-logo">AdMe</a>
-      <% if (path == "/register/advertiser" || path == "/register/user") { %>
+      <% if (loggedUser == "notLogged") { %>
         <ul class="right hide-on-med-and-down">
           <li><a href="/" class="waves-effect waves-teal btn-flat">Login</a></li>
         </ul>
-      <% } else { %>
+      <% } if (loggedUser == "User") { %>
         <ul class="right hide-on-med-and-down">
           <li><a href="/view/stats" class="waves-effect waves-teal btn-flat">View Profile</a></li>
+        </ul>
+      <% } else if (loggedUser == "Advertiser") { %>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/ad/create" class="waves-effect waves-teal btn-flat">Create Ads</a></li>
         </ul>
       <% } %>
     </div>
