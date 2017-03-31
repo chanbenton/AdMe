@@ -47,13 +47,13 @@ module.exports = (knex) => {
   });
 
   router.post("/login", (req, res) => {
-    console.log(req.body);
+
     knex('users').where({
         email: req.body.loginEmail,
         password: req.body.loginPassword
     })
     .asCallback(function(err, rows){
-      console.log(rows);
+
       req.session.userId = rows[0].id
       if(rows[0].role == 'User'){
         res.redirect('/view')

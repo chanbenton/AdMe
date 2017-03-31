@@ -24,15 +24,28 @@ module.exports = (knex) => {
   routes.get("/stats", (req, res) => {
     knex("products")
       .join('shared_links', 'products.id', '=', 'shared_links.products_id')
+      .join('users', 'users.id', '=', 'shared_links.users_id')
       .select("*")
       .where('shared_links.users_id', '=', req.session.userId)
       .then((results) => {
+
+        let moolah = 0;
+        results.forEach( function(value, index){
+          moolah += value.click_count * value.cost
+        })
+
+
         let templateVars = {
+          name: results[0].name,
+          email: results[0].email,
+          moolah: moolah,
           products: results.reverse(),
           path: "/view/stats"
         }
+
         res.render("userstats", templateVars);
       });
+
   });
 
 
