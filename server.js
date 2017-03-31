@@ -109,24 +109,25 @@ app.get("/users/:id/ads", (req, res) => {
       });
 });
 
+//.raw('SELECT cost, click_count, cost*click_count AS money_earned FROM shared_links WHERE users_id = req.session.userId')
 
-
-app.get("/users/:id/stats", (req, res) => {
-
+app.get("/view/stats", (req, res) => {
+console.log("DOES THIS WORL??")
   knex('users')
               .join('shared_links', 'users.id', '=', 'shared_links.users_id')
+              //.join('products', 'users.id', '=', 'shared_links.users_id')
               .select('users.name', 'users.email', 'shared_links.cost', 'shared_links.click_count')
               .where('users.id', '=', req.session.userId)
-      //.raw('SELECT cost, click_count, cost*click_count AS money_earned FROM shared_links WHERE users_id = req.session.userId')
-              .then((results) => {
 
+              .then((results) => {
+                console.log(results)
                 console.log("THE FOLLOWING SHOULD BE THE AMOUNT OF MONEY EARNED", results);
 
                 var money = results[0].cost*results[0].click_count;
                 console.log(money);
 
                 let templateVariable = {
-                 path: "/users/:id/stats",
+                 path: "/view/stats",
                  name: results[0].name,
                  email: results[0].email,
                  moolah: money

@@ -26,16 +26,28 @@ module.exports = (knex) => {
       // if (!userId)
     knex("products")
       .join('shared_links', 'products.id', '=', 'shared_links.products_id')
+      .join('users', 'users.id', '=', 'shared_links.users_id')
       .select("*")
       .where('shared_links.users_id', '=', req.session.userId)
       .then((results) => {
-        console.log(results);
+        console.log("HELLO",results);
+        let moolah = 0;
+        results.forEach( function(value, index){
+          console.log("THISSSSS", value.click_count)
+          moolah += value.click_count * value.cost
+        })
+
         let templateVars = {
+          name: results[0].name,
+          email: results[0].email,
+          moolah: moolah,
           products: results.reverse(),
           path: "/view/stats"
         }
+
         res.render("userstats", templateVars);
       });
+
   });
 
 
