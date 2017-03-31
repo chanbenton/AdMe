@@ -4,10 +4,16 @@
   <head>
     <title>AdMe</title>
 
-    <meta property="og:url"           content="http://127.0.0.1:8080" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@AdMe">
+    <meta name="twitter:title" content="<%= product.title %>">
+    <meta name="twitter:description" content="<%= product.desc %>">
+    <meta name="twitter:image" content="http://graphics8.nytimes.com/images/2012/02/19/us/19whitney-span/19whitney-span-articleLarge.jpg">
+
+    <meta property="og:url"           content="adme-app.herokuapp.com" />
     <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="Awesomesauce" />
-    <meta property="og:description"   content="Testrun" />
+    <meta property="og:title"         content="<%= product.title %>" />
+    <meta property="og:description"   content="<%= product.desc %>" />
     <meta property="og:image"         content="https://img.clipartfox.com/6a7ba8a6429e1b6ae50adb34acee6957_nature-google-the-vineyard-google-clipart-nature_1600-1200.jpeg" />
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -30,7 +36,7 @@
   </head>
 
   <body>
-    <%- include partials/_topnav %>
+    <% include partials/_topnav %>
     <div class="row">
       <div class="col s12 m6 l4" >
         <img src="/ad_img/<%= product.img_path %>" style="height:325px;">
