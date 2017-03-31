@@ -10,7 +10,7 @@
     <meta name="twitter:description" content="<%= product.desc %>">
     <meta name="twitter:image" content="http://graphics8.nytimes.com/images/2012/02/19/us/19whitney-span/19whitney-span-articleLarge.jpg">
 
-    <meta property="og:url"           content="adme-app.herokuapp.com" />
+    <meta property="og:url"           content="adme-app.herokuapp.com/view/<%= product.id %>" />
     <meta property="og:type"          content="website" />
     <meta property="og:title"         content="<%= product.title %>" />
     <meta property="og:description"   content="<%= product.desc %>" />
@@ -53,9 +53,9 @@
         <%# if user.role = "user", show the below buttons %>
         <div id="fb" class="btn btn-success clearfix">Share</div>
 
-        <div class="fb-share-button" data-href="http://127.0.0.1:8080/" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8080%2F&amp;src=sdkpreparse">Share to FB</a></div>
+        <div class="fb-share-button" data-href="https://adme-app.herokuapp.com/view/<%= product.id %>" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8080%2F&amp;src=sdkpreparse">Share to FB</a></div>
 
-        <a href="https://twitter.com/intent/tweet?text=<%= product.title %> - <%= product.desc %>&url=http://127.0.0.1:8080">TW Share</a>
+        <a href="https://twitter.com/intent/tweet?text=<%= product.title %> - <%= product.desc %>&url=https://adme-app.herokuapp.com/view/<%= product.id %>">TW Share</a>
         <%# end here %>
       </div>
     </div>

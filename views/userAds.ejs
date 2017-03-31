@@ -8,7 +8,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-
+    
     <!-- Fonts  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -23,18 +23,13 @@
   </head>
 
   <body>
+    
     <% include partials/_topnav %>
-
-    <%# if user.role = 'admin' %>
-    <!-- "Title, h2(?): Your produced ads-->
-    <%# end here %>
 
     <div class="row">
       <% for (let each of products) { %>
         <% include partials/_ads %>
       <% } %>
     </div>
-
   </body>
-
 </html>
