@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
 
     <!-- CSS file to overwrite Materialize, if necessary
     <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection" /> -->
@@ -45,13 +47,53 @@
           <p><%= product.desc %></p>
         </div>
 
-        <%# if user.role = "user", show the below buttons %>
-        <div id="fb" class="btn btn-success clearfix">Share</div>
+        <% if (loggedUser == "User") { %>
+          <div id="fb" class="btn btn-success clearfix">Share</div>
+          <div class="fb-share-button" data-href="http://127.0.0.1:8080/" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8080%2F&amp;src=sdkpreparse">Share to FB</a></div>
+          <a href="https://twitter.com/intent/tweet?text=<%= product.title %> - <%= product.desc %>&url=http://127.0.0.1:8080">Twitter</a>
+        <% } else if (loggedUser == "Advertiser") { %>
+          <div style="width:400px; height:400px;"><canvas id="myChart" width="500" height="500"></canvas></div>
+          <script>
+            var ctx = document.getElementById("myChart");
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: <%-labels%>,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [<%=ads %>],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255,99,132,1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
+            });
+          </script>
 
-        <div class="fb-share-button" data-href="http://127.0.0.1:8080/" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8080%2F&amp;src=sdkpreparse">Share to FB</a></div>
-
-        <a href="https://twitter.com/intent/tweet?text=<%= product.title %> - <%= product.desc %>&url=http://127.0.0.1:8080">Twitter</a>
-        <%# end here %>
+          <% } %>
       </div>
     </div>
 
