@@ -58,7 +58,6 @@ module.exports = (knex) => {
         password: req.body.loginPassword
     })
     .asCallback(function(err, rows){
-
       req.session.userId = rows[0].id
       res.redirect('/view')
     });

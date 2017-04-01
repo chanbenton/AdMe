@@ -2,12 +2,12 @@
 <div class="col s3">
   <div class="card" style="min-width:200px;">
     <div class="card-image waves-effect waves-block waves-light" >
-      <a href="view/ads/<%= each.id %>"><img class="activator" src="/ad_img/<%= each.img_path %>"></a>
+      <a href="/view/ads/<%= each.id %>"><img class="activator" src="/ad_img/<%= each.img_path %>"></a>
     </div>
     <div class="card-content">
       <!-- expand_less points up, even though this button expands MORE-->
       <span class="card-title activator grey-text text-darken-4"><%= each.title %><i class="material-icons right">expand_less</i></span>
-
+      <!-- <span class="card-title activator grey-text text-darken-4">Shared to <%= each.platform %> -->
     </div>
     <div class="card-reveal">
       <!-- expand_more points down, even though this button expands LESS-->
