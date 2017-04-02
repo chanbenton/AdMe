@@ -15,27 +15,51 @@ const knex          = require("knex")(knexConfig[ENV]);
 const morgan        = require('morgan');
 const knexLogger    = require('knex-logger');
 var bcrypt          = require("bcrypt");
+// var fs              = require('file-system');
+var aws             = require('aws-sdk');
+//var fs              = require('fs');
+//var Uploader        = require('s3-image-uploader');
+//const WebSocket     = require('ws');
 
 
 
+// aws.config.update({
+//   accessKeyId: 'AKIAJ5LJO4ZHOAPZBUOA',
+//   secretAccesskey: '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'
+// })
 
-const usersRoutes = require("./routes/users");
-const viewRoutes = require("./routes/view");
+
+// var multiparty      = require('connect-multiparty')
+//   var multipartyMiddleware = multiparty();
+
+// var S3FS            = require('s3fs');
+// var s3fsImpl        = new S3FS('admeimagebucket1', {
+//     accessKeyId: 'AKIAJ5LJO4ZHOAPZBUOA',
+//     secretAccesskey: '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'
+// })
+
+// s3fsImpl.create();
+
+const usersRoutes   = require("./routes/users");
+const viewRoutes    = require("./routes/view");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 
+//app.use(multipartyMiddleware);
+
+
 const saltRounds = 10;
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, 'public/ad_img/')
-  },
-  filename: function(req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-const upload = multer({storage: storage})
+// const storage = multer.diskStorage({
+//   destination: function(req, file, cb) {
+//     cb(null, 'public/ad_img/')
+//   },
+//   filename: function(req, file, cb) {
+//     cb(null, file.originalname)
+//   }
+// })
+// const upload = multer({storage: storage})
 app.use(cookieSession({
   name: 'session',
   keys: ['user_id'],
@@ -79,18 +103,61 @@ app.get("/ad/create", (req, res) => {
     })
 });
 
-app.post("/ad/create", upload.single('Image'), (req, res) => {
-  console.log(req.file.filename);
+app.post("/ad/create", /*upload.single('Image'),*/ (req, res) => {
 
-  knex('products').insert([{
-      img_path: req.file.filename,
-      title: req.body.adTitle,
-      desc: req.body.adDesc,
-      creator_uid: req.session.userId
-    }])
-    .then(function(resp) {
-      res.send("Ad Created and Added to DB")
-    })
+res.send("Hi, this works.")
+
+//***************** ORIGINAL *****************
+  // knex('products').insert([{
+  //     img_path: req.file.filename,
+  //     title: req.body.adTitle,
+  //     desc: req.body.adDesc,
+  //     creator_uid: req.session.userId
+  //   }])
+  //   .then(function(resp) {
+  //     res.redirect("/view")
+  //   })
+
+//***************** DIFFERENT *****************
+
+  // const s3 = new aws.S3({
+  //   accessKeyId: "AKIAJFXUGD3IJAWSBUWA",
+  //   secretAccessKey: "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",
+  //   region: 'ca-central-1'
+  // });
+
+  // console.log(s3)
+  // //console.log(s3.config)
+
+  // //const S3_BUCKET = ;
+
+  // const fileName = req.query['file-name'];
+  // const fileType = req.query['file-type'];
+
+  // const s3Params = {
+  //   Bucket: 'admeimagebucket1',
+  //   Key: fileName,
+  //   Expires: 60,
+  //   ContentType: fileType,
+  //   ACL: 'public-read'
+  // };
+
+  // s3.getSignedUrl('putObject', s3Params, (err, data) => {
+  //   if(err){
+  //     console.log('We hit an error getting the signed url from S3')
+  //     console.log(err);
+  //     return res.end();
+  //   }
+  //   const returnData = {
+  //     signedRequest: data,
+  //     url: `https://admeimagebucket1.s3.amazonaws.com/${fileName}`
+  //   };
+
+  //   console.log("THIS SHOULD BE THE URL", returnData.url)
+  //   //KNEX INSERT GOES HERE.
+
+  //   res.status(200).json(returnData);
+  // });
 
 })
 
@@ -144,6 +211,54 @@ console.log("DOES THIS WORL??")
                 res.render("userstats" ,templateVariable);
       })
 });
+
+app.get('/sign-s3', (req, res) => {
+  const s3 = new aws.S3({
+    accessKeyId: "AKIAJFXUGD3IJAWSBUWA",
+    secretAccessKey: "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",
+    region: 'ca-central-1'
+  });
+
+  console.log(s3)
+  //console.log(s3.config)
+
+  //const S3_BUCKET = ;
+
+  const fileName = req.query['file-name'];
+  const fileType = req.query['file-type'];
+
+  const s3Params = {
+    Bucket: 'admeimagebucket1',
+    Key: fileName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      console.log('We hit an error getting the signed url from S3')
+      console.log(err);
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://admeimagebucket1.s3.amazonaws.com/${fileName}`
+    };
+
+    console.log("THIS SHOULD BE THE URL", returnData.url)
+    //KNEX INSERT GOES HERE.
+
+
+    res.status(200).json(returnData);
+  });
+});
+
+app.post('/save-details', (req, res) => {
+  // TODO: Read POSTed form data and do something useful
+  res.send("Hi, this works.")
+});
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

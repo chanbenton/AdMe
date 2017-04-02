@@ -78,22 +78,116 @@
           <div class="file-field input-field">
             <div class="btn">
               <span>Image</span>
-              <input type="file" name="Image">
+              <input type="file">
             </div>
             <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" name="imgPath" >
+              <input class="file-path validate" type="text" name="imgPath">
             </div>
           </div>
     </div>
   </div>
 
   <div class="row">
-      <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+      <button class="btn waves-effect waves-light" type="submit" value="Update profile" name="action">Submit
         <i class="material-icons right">send</i>
       </button>
   </div>
     </form>
   </div>
+
+  <input type="file" id="file-input">
+    <p id="status">Please select a file</p>
+    <img id="preview" src="/images/default.png">
+
+  <form method="POST" action="/ad/create">
+    <input type="hidden" id="avatar-url" name="avatar-url" value="/images/default.png">
+    <input type="text" name="username" placeholder="Username"><br>
+    <input type="text" name="full-name" placeholder="Full name"><br><br>
+    <input type="submit" value="Update profile">
+  </form>
+
+
+  <script>
+    (() => {
+      document.getElementById("file-input").onchange = () => {
+        const files = document.getElementById('file-input').files;
+        const file = files[0];
+        if(file == null){
+          return alert('No file selected.');
+        }
+        getSignedRequest(file);
+      };
+  })
+  ();
+
+    function getSignedRequest(file){
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+      xhr.onreadystatechange = () => {
+        if(xhr.readyState === 4){
+          if(xhr.status === 200){
+            const response = JSON.parse(xhr.responseText);
+            uploadFile(file, response.signedRequest, response.url);
+          }
+          else{
+            alert('Could not get signed URL.');
+          }
+        }
+      };
+      xhr.send();
+    }
+
+    function uploadFile(file, signedRequest, url){
+      //debugger
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', signedRequest);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.onreadystatechange = () => {
+        if(xhr.readyState === 4){
+          if(xhr.status === 200){
+            console.log("HIIIIIIIII")
+            document.getElementById('preview').src = url;
+            document.getElementById('avatar-url').value = url;
+            console.log("IS THIS THE URL?", url);
+            // Make a request to save the img_url for the user
+            // Use Ajax
+
+            // $.ajax({
+            //   method: "POST",
+            //   url: "/ad/create"
+            // }).then(() => {
+            //     knex('products').insert([{
+            //       img_path: req.file.filename,
+            //       title: req.body.adTitle,
+            //       desc: req.body.adDesc,
+            //       creator_uid: req.session.userId
+            //     }])
+            //     .then(function(resp) {
+            //        res.redirect("/view")
+            //      })
+            // })
+
+
+
+
+          }
+          else{
+            //debugger
+            alert('Could not upload file.');
+          }
+        }
+      };
+      xhr.send(file);
+    }
+
+
+
+  </script>
+
+
+
+
+
 
   </body>
 </html>
