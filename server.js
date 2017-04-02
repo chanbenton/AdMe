@@ -249,6 +249,17 @@ app.get('/sign-s3', (req, res) => {
     console.log("THIS SHOULD BE THE URL", returnData.url)
     //KNEX INSERT GOES HERE.
 
+//***************** ORIGINAL *****************
+//***************** NEED TO CHANGE THIS. THIS WONT WORK. *****************
+  knex('products').insert([{
+      img_path: returnData.url,
+      title: req.body.adTitle,
+      desc: req.body.adDesc,
+      creator_uid: req.session.userId
+    }])
+    .then(function(resp) {
+      res.redirect("/view")
+    })
 
     res.status(200).json(returnData);
   });
@@ -258,6 +269,8 @@ app.post('/save-details', (req, res) => {
   // TODO: Read POSTed form data and do something useful
   res.send("Hi, this works.")
 });
+
+
 
 
 app.listen(PORT, () => {
