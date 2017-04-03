@@ -3,19 +3,22 @@
 
   <head>
     <title>AdMe</title>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/fb_api.js" ></script>
 
     <!-- Fonts  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
 
     <!-- CSS file to overwrite Materialize, if necessary
     <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection" /> -->
@@ -23,17 +26,27 @@
   </head>
 
   <body>
-    <% include partials/_topnav %>
-    <%# if user.role = 'admin' %>
-    <!-- "Title, h2(?): Your produced ads-->
-    <%# end here %>
-
-    <div class="row">
-      <% for (let each of products) { %>
-        <% include partials/_ads %>
-      <% } %>
-    </div>
-
+      <table class="highlight bordered">
+          <thead>
+            <tr>
+                <th>Name</th>
+                <th>Ad id</th>
+                <th>Platform</th>
+                <th>Clicks</th>
+                <th>Cost</th>
+            </tr>
+          </thead>
+          <% for (let each of details) { %>
+            <tbody>
+              <tr>
+                <td><%=each.name%></td>
+                <td><%=each.products_id%></td>
+                <td><%=each.platform%></td>
+                <td><%=each.click_count%></td>
+                <td><%=each.cost%></td>
+              </tr>
+            </tbody>
+          <% } %>
+        </table>
   </body>
-
 </html>

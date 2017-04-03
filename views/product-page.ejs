@@ -1,0 +1,113 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adme</title>
+    <link rel="stylesheet" href="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+  </head>
+  <body>
+
+    <br>
+    <!-- You can now combine a row and column if you just need a 12 column row -->
+    <div class="row">
+      <div class="medium-6 columns">
+        <img class="thumbnail" src="/ad_img/<%= product.img_path %>">
+      </div>
+      <div class="medium-6 large-5 columns">
+        <h3><%= product.title %></h3>
+        <hr>
+        <p><%= product.desc %></p>
+
+        <div class="row">
+          <hr>
+          <div class="small-3 columns">
+            <label for="middle-label" class="middle">Views</label>
+          </div>
+          <div class="small-9 columns">
+            <h5><%=product.click_count%></h5>
+          </div>
+        </div>
+
+        <% if (loggedUser == "User") { %>
+            <div class="small secondary expanded button-group">
+              <a class="button info">Facebook</a>
+              <a class="button">Twitter</a>
+            </div>
+          </div>
+    </div>
+        <% } if (loggedUser == "Advertiser") { %>
+            <div class="column row">
+              <hr>
+              <div id="chartjs-bar-chart" class="section">
+                <h4 class="header">Bar Chart</h4>
+                <div class="col s12 m8 l9">
+                  <div class="sample-chart-wrapper">
+                    <div style="width:400px; height:400px;"><canvas id="myChart" width="554" height="300"></canvas></div>
+                    <script>
+                      var ctx = document.getElementById("myChart");
+                      var myChart = new Chart(ctx, {
+                          type: 'bar',
+                          data: {
+                              labels: <%-labels%>,
+                              datasets: [{
+                                  label: '# of clicks',
+                                  data: [<%=ads %>],
+                                  backgroundColor: [
+                                      'rgba(255, 99, 132, 0.2)',
+                                      'rgba(54, 162, 235, 0.2)',
+                                      'rgba(255, 206, 86, 0.2)',
+                                      'rgba(75, 192, 192, 0.2)',
+                                      'rgba(153, 102, 255, 0.2)',
+                                      'rgba(255, 159, 64, 0.2)'
+                                  ],
+                                  borderColor: [
+                                      'rgba(255,99,132,1)',
+                                      'rgba(54, 162, 235, 1)',
+                                      'rgba(255, 206, 86, 1)',
+                                      'rgba(75, 192, 192, 1)',
+                                      'rgba(153, 102, 255, 1)',
+                                      'rgba(255, 159, 64, 1)'
+                                  ],
+                                  borderWidth: 1
+                              }]
+                          },
+                          options: {
+                              scales: {
+                                  yAxes: [{
+                                      ticks: {
+                                          beginAtZero:true
+                                      }
+                                  }]
+                              }
+                          }
+                      });
+                    </script>
+                  <% } %>
+                  </div>
+                </div>
+          </section>
+        </div>
+            </div>
+      <%  if (loggedUser) { %>
+        <div class="row column">
+          <hr>
+          <ul class="menu">
+            <li>Adme</li>
+            <li><a href="/view">Home</a></li>
+            <li><a href="/view/advertiser/stats">Your Ads</a></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div>
+      <% } %>
+
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

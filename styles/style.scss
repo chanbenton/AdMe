@@ -30,7 +30,27 @@ form{
   width: 100%;
 }
 
-form.col.s12{
-
+.button-collapse{
+  display: inherit;
 }
+@media screen and (orientation: portrait) {
+  img.activator { max-width: 90%; }
+}
+
+@media screen and (orientation: landscape) {
+  img.activator { max-height: 90%; }
+}
+
+
 body{ margin:0px 0px; }
+
+
+@media (max-width: 400px) {
+  .row .col {
+    float:none !important;
+  }
+
+  .row .col.s3 {
+  width: 100% !important;
+}
+}

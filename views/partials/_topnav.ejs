@@ -1,22 +1,61 @@
 <div class="navbar-fixed">
   <nav>
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">AdMe</a>
-      <% if (loggedUser == "notLogged") { %>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="/" class="waves-effect waves-teal btn-flat">Login</a></li>
-        </ul>
-
-      <% } if (loggedUser == "User") { %>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="/view/stats" class="waves-effect waves-teal btn-flat">View Profile</a></li>
-        </ul>
-      <% } else if (loggedUser == "Advertiser") { %>
-        <ul class="right hide-on-med-and-down">
-          <li><a href="/ad/create" class="waves-effect waves-teal btn-flat">Create Ads</a></li>
-        </ul>
-
-      <% } %>
+      <a href="#!" class="brand-logo center">AdMe</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <a href="#" data-activates="slide-out" class="button-collapse show-on-large left hide-on-med-and-down">
+        <i class="material-icons">menu</i>
+      </a>
     </div>
   </nav>
+</div>
+
+<div class="container">
+  <ul class="side-nav" id="mobile-demo">
+    <li><a href="#!name"><span class="name"><%= name %></span></a></li>
+    <li><a href="#!email"><span class="email"><%= email %></span></a></li>
+    <li><div class="divider"></div></li>
+    <%  if (loggedUser == "User") { %>
+        <li><a class="subheader">Your Earnings</a></li>
+        <li><a class="waves-effect" href="#!">You made $<%= moolah %>!!</a></li>
+        <li><div class="divider"></div></li>
+        <li><a href="/view" class="waves-effect waves-light btn">View Ads</a></li>
+        <li><a href="/view/stats" class="waves-effect waves-light btn">My Shared Ads</a></li>
+        <li><div class="divider"></div></li>
+    <% } else if (loggedUser == "Advertiser") { %>
+        <li><a href="/ad/create" class="waves-effect waves-light btn">Create Ads</a></li>
+        <li><a href="/view/advertiser/stats" class="waves-effect waves-light btn">Your Ads</a></li>
+        <li><a href="/view/advertiser/payouts" class="waves-effect waves-light btn">Payouts</a></li>
+    <% } %>
+        <li><div class="divider"></div></li>
+        <li><a href="/logout" class="waves-effect waves-light btn">Logout</a></li>
+  </ul>
+</div>
+
+<div class="container">
+  <ul id="slide-out" class="side-nav">
+    <li>
+      <div class="background">
+        <img src="https://upload.wikimedia.org/wikipedia/en/e/e0/Iron_Man_bleeding_edge.jpg">
+      </div>
+    </li>
+    <li><a href="#!name"><span class="name"><%= name %></span></a></li>
+    <li><a href="#!email"><span class="email"><%= email %></span></a></li>
+    <li><div class="divider"></div></li>
+    <%  if (loggedUser == "User") { %>
+        <li><a class="subheader">Your Earnings</a></li>
+        <li><a class="waves-effect" href="#!">You made $<%= moolah %>!!</a></li>
+        <li><div class="divider"></div></li>
+        <li><a href="/view" class="waves-effect waves-light btn">View Ads</a></li>
+        <li><a href="/view/stats" class="waves-effect waves-light btn">My Shared Ads</a></li>
+        <li><div class="divider"></div></li>
+    <% } else if (loggedUser == "Advertiser") { %>
+        <li><a href="/ad/create" class="waves-effect waves-light btn">Create Ads</a></li>
+        <li><a href="/view/advertiser/stats" class="waves-effect waves-light btn">Your Ads</a></li>
+        <li><a href="/view/advertiser/payouts" class="waves-effect waves-light btn">Payouts</a></li>
+    <% } %>
+        <li><div class="divider"></div></li>
+        <li><a href="/logout" class="waves-effect waves-light btn">Logout</a></li>
+      <!-- <li><form method="POST" action="/logout"><a href="/" class="waves-effect waves-light btn">Logout</a></form></li> -->
+  </ul>
 </div>

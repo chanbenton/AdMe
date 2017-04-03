@@ -1,18 +1,14 @@
-
 <div class="col s3">
-  <div class="card" style="min-width:200px;">
-    <div class="card-image waves-effect waves-block waves-light" >
-      <a href="/view/ads/<%= each.id %>"><img class="activator" src="/ad_img/<%= each.img_path %>"></a>
-    </div>
+  <div class="card hoverable" style="min-width:200px;">
+    <a href="/view/ads/<%= each.id %>">
+      <div class="card-image waves-effect waves-block waves-light" style="background:url('/ad_img/<%= each.img_path %>') center center no-repeat; background-size: contain; height: 200px; width: 100%;">
+      <!-- <img style="width:100%; height:auto; margin: 0 auto;"class="activator" src="/ad_img/<%= each.img_path %>"> -->
+      </div>
+    </a>
     <div class="card-content">
       <!-- expand_less points up, even though this button expands MORE-->
-      <span class="card-title activator grey-text text-darken-4"><%= each.title %><i class="material-icons right">expand_less</i></span>
+      <span class="card-title activator grey-text text-darken-4"><%= each.title %></span>
       <!-- <span class="card-title activator grey-text text-darken-4">Shared to <%= each.platform %> -->
-    </div>
-    <div class="card-reveal">
-      <!-- expand_more points down, even though this button expands LESS-->
-      <span class="card-title grey-text text-darken-4"><%= each.title %><i class="material-icons right">expand_more</i></span>
-      <p><%= each.desc %></p>
     </div>
   </div>
 </div>
