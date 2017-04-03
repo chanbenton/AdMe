@@ -90,7 +90,7 @@ app.post("/ad/create", upload.single('Image'), (req, res) => {
 app.get("/users/:id/ads", (req, res) => {
 
  var count = [];
- var platfom = []
+ var platfom = [];
  knex
      .select('click_count', 'platform')
      .from('shared_links')
@@ -115,6 +115,13 @@ app.get("/users/:id/stats", (req, res) => {
   let templateVariable = {
     path: "/users/:id/stats"
 
+  };
+  res.render("userstats", templateVariable);
+});
+
+app.get("/refer/:id", (req, res) => {
+  let templateVars = {
+    path: "/users/:id/stats"
   };
   res.render("userstats", templateVariable);
 });

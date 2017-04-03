@@ -20,10 +20,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/scripts/fb_api.js" ></script>
+    <script type="text/javascript" src="/scripts/share_api.js" ></script>
 
     <!-- Fonts  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/styles/button-override.css">
 
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
@@ -36,8 +37,8 @@
   </head>
 
   <body>
-    <% include partials/_topnav %>
     <div class="row">
+      <% include partials/_topnav %>
       <div class="col s12 m6 l4" >
         <img src="/ad_img/<%= product.img_path %>" style="height:325px;">
       </div>
@@ -49,14 +50,19 @@
           <dd><%= product.desc %></dd>
         </dl>
 
-
-        <%# if user.role = "user", show the below buttons %>
-        <div id="fb" class="btn btn-success clearfix">Share</div>
-
-        <div class="fb-share-button" data-href="https://adme-app.herokuapp.com/view/<%= product.id %>" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8080%2F&amp;src=sdkpreparse">Share to FB</a></div>
-
-        <a href="https://twitter.com/intent/tweet?text=<%= product.title %> - <%= product.desc %>&url=https://adme-app.herokuapp.com/view/<%= product.id %>">TW Share</a>
-        <%# end here %>
+        <% if (user) {%>
+          <div class="fb-share-button"
+          data-href="https://adme-app.herokuapp.com/refer/?id=<%= product.id %>"
+          data-layout="button_count"
+          data-mobile-iframe="true">
+            <a class="fb-xfbml-parse-ignore"
+            target="_blank"
+            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fadme-app.herokuhost.com%2Frefer%2F%3Fid%3D<%= shareFb.id %>&amp;src=sdkpreparse">Share</a>
+          </div>
+          <a class="twitter-share-button"
+            href="https://twitter.com/intent/tweet?text=<%= product.title %> - <%= product.desc %>&url=https%3A%2F%2Fadme-app.herokuhost.com%2Frefer%2F%3Fid%3D<%= shareTw.id %>">
+          Tweet</a>
+        <% } %>
       </div>
     </div>
 
