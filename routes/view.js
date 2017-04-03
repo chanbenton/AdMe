@@ -178,6 +178,22 @@ module.exports = (knex) => {
       });
   });
 
+  routes.post("/delete/:product_id", (req, res) => {
+    console.log(req.params.product_id);
+    knex('shared_links')
+      .where('products_id', req.params.product_id)
+      .del()
+      .then((results) => {
+        knex('products')
+          .where('id', req.params.product_id)
+          .del()
+          .then((rows) => {
+            console.log("Row deleted");
+            res.redirect("/view")
+          })
+      })
+  })
+
   // routes.get("/:product_id/share/fb", (req, res) => {
   //   let p_id = req.params.product_id;
   //   let userId = req.session.user_id;

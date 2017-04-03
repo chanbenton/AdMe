@@ -14,23 +14,19 @@
     <!-- You can now combine a row and column if you just need a 12 column row -->
     <div class="row">
       <div class="medium-6 columns">
+          <h3><%= product.title %></h3>
         <img class="thumbnail" src="/ad_img/<%= product.img_path %>">
-      </div>
-      <div class="medium-6 large-5 columns">
-        <h3><%= product.title %></h3>
+        <h4>Description</h4>
         <hr>
         <p><%= product.desc %></p>
+      </div>
+      <div class="medium-6 large-5 columns">
 
         <div class="row">
-          <hr>
-          <div class="small-3 columns">
-            <label for="middle-label" class="middle">Views</label>
-          </div>
-          <div class="small-9 columns">
-            <h5><%=product.click_count%></h5>
-          </div>
+          <br>
+          <br>
+          <br>
         </div>
-
         <% if (loggedUser == "User") { %>
             <div class="small secondary expanded button-group">
               <a class="button info">Facebook</a>
@@ -40,12 +36,12 @@
     </div>
         <% } if (loggedUser == "Advertiser") { %>
             <div class="column row">
-              <hr>
+              <br>
               <div id="chartjs-bar-chart" class="section">
                 <h4 class="header">Bar Chart</h4>
                 <div class="col s12 m8 l9">
                   <div class="sample-chart-wrapper">
-                    <div style="width:400px; height:400px;"><canvas id="myChart" width="554" height="300"></canvas></div>
+                    <div style="width:400px; height:250px;"><canvas id="myChart" width="554" height="350"></canvas></div>
                     <script>
                       var ctx = document.getElementById("myChart");
                       var myChart = new Chart(ctx, {
@@ -91,6 +87,9 @@
           </section>
         </div>
             </div>
+            <br>
+            <br>
+            <a href="/view/delete/<%=product.id%>" class="button large expanded">Delete</a>
       <%  if (loggedUser) { %>
         <div class="row column">
           <hr>

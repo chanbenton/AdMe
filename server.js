@@ -15,6 +15,7 @@ const knex          = require("knex")(knexConfig[ENV]);
 const morgan        = require('morgan');
 const knexLogger    = require('knex-logger');
 var bcrypt          = require("bcrypt");
+const aws           = require('aws-sdk');
 
 
 
@@ -143,6 +144,36 @@ console.log("DOES THIS WORL??")
                 };
                 res.render("userstats" ,templateVariable);
       })
+});
+
+app.get('/sign-s3', (req, res) => {
+  const s3 = new aws.S3({
+    accessKeyId: "AKIAICCDE5LICDU2A2HA",
+    secretAccessKey: "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",
+    region: 'ca-central-1'
+  });
+  const fileName = req.query['file-name'];
+  const fileType = req.query['file-type'];
+  const s3Params = {
+   Bucket: 'admeimagebucket1',
+   Key: fileName,
+   Expires: 60,
+   ContentType: fileType,
+   ACL: 'public-read'
+ };
+
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      console.log(err);
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://admeimagebucket1.s3.amazonaws.com/${fileName}`
+    };
+    res.write(JSON.stringify(returnData));
+    res.end();
+  });
 });
 
 app.listen(PORT, () => {
