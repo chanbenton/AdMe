@@ -17,6 +17,7 @@ const knexLogger    = require('knex-logger');
 var bcrypt          = require("bcrypt");
 // var fs              = require('file-system');
 var aws             = require('aws-sdk');
+require('dotenv').config()
 //var fs              = require('fs');
 //var Uploader        = require('s3-image-uploader');
 //const WebSocket     = require('ws');
@@ -116,10 +117,16 @@ console.log(req.body, "REQ.BODY")
 console.log(req.query, "REQ.QUERY")
 
   const s3 = new aws.S3({
-    accessKeyId: "AKIAICCDE5LICDU2A2HA",
-    secretAccessKey: "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",
+    accessKeyId: process.env.AWS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET,
     region: 'ca-central-1'
   });
+
+// Access Key ID:
+// AKIAIUAGTLQKSXLES5UA
+// Secret Access Key:
+// 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
+
 
   console.log(s3)
   //console.log(s3.config)
