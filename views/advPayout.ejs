@@ -25,25 +25,25 @@
 
   </head>
 
-  <body>
-      <table class="highlight bordered">
-          <thead>
+  <body style="padding: 13px">
+      <table class="highlight bordered" style="border: 1px solid black;">
+          <thead class="teal">
             <tr>
                 <th>Name</th>
-                <th>Ad id</th>
+                <th>Ad-ID</th>
+                <th>Title</th>
                 <th>Platform</th>
-                <th>Clicks</th>
-                <th>Cost</th>
+                <th>Total</th>
             </tr>
           </thead>
           <% for (let each of details) { %>
-            <tbody>
+            <tbody class="teal lighten-4">
               <tr>
                 <td><%=each.name%></td>
                 <td><%=each.products_id%></td>
+                <td><%=each.title%></td>
                 <td><%=each.platform%></td>
-                <td><%=each.click_count%></td>
-                <td><%=each.cost%></td>
+                <td><%=each.total%></td>
               </tr>
             </tbody>
           <% } %>

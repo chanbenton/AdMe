@@ -28,10 +28,11 @@
           <br>
         </div>
         <% if (loggedUser == "User") { %>
-            <div class="small secondary expanded button-group">
-              <a class="button info">Facebook</a>
-              <a class="button">Twitter</a>
-            </div>
+              <br>
+              <br>
+              <a class="button medium expanded">Share on Facebook</a>
+              <a class="button medium expanded">Share on Twitter</a>
+
           </div>
     </div>
         <% } if (loggedUser == "Advertiser") { %>
@@ -89,7 +90,6 @@
             </div>
             <br>
             <br>
-            <a href="/view/delete/<%=product.id%>" class="button large expanded">Delete</a>
       <%  if (loggedUser) { %>
         <div class="row column">
           <hr>
