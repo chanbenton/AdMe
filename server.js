@@ -119,13 +119,43 @@ app.get("/users/:id/stats", (req, res) => {
   res.render("userstats", templateVariable);
 });
 
-app.get("/refer/:id", (req, res) => {
-  let templateVars = {
-    path: "/users/:id/stats"
-  };
-  res.render("userstats", templateVariable);
+app.get("/refer/:sl_id", (req, res) => {
+  // add a cost column, actually...
+  let shareId = req.params.sl_id;
+
+  knex
+    .select("*")
+    .from("shared_links")
+    .where({id: shareId})
+    .then((results) => {
+      if (results.length !== 0) {
+        let product = results[0];
+        console.log("original", results)
+        product.click_count += 1;
+        console.log("updated", results)
+        knex("shared_links").where({id: shareId}).update("click_count", product.click_count)
+        .then(()=> {
+          res.redirect(`/view/${product.id}`)
+        });
+      } else {
+        res.sendStatus(500);
+      }
+    })
 });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+// routes.get('/:sl_id', (req, res) => {
+//     var sharedId = req.params.sl_id;
+//     knex
+//         .select("click_count")
+//         .from("shared_links")
+//         .where('id','=','sharedId')
+//         .then((results) => {
+//           console.log("original", results)
+//           results[0] += 1;
+//           console.log("updated", results)
+//           knex("shared_links").update("click_count", results[0])
+//         })
+//   })
