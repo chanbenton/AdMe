@@ -1,52 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+        <!-- CSS  -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="/styles/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+        <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+
+        <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+        <script type="text/javascript" src="/scripts/app.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="/scripts/materialize.js"></script>
+        <script src="/scripts/init.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js'></script>
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+
+
+    </head>
+
     <title>Create Ads</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/styles/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="/scripts/materialize.js"></script>
+    <script src="/scripts/init.js"></script>
   </head>
 
   <body>
-    <% include _topnav %>
     <div class="col s12 m4 l8"><h4 class="header">Create an Ad</h4></div>
 
     <div class="row">
 
-    <form class="col s12" action="/ad/create" method="POST" enctype="multipart/form-data">
+    <form class="col s12" id="adForm" action="/ad/create" method="POST" >
 
-    <div class="col s12 m4 l8">
-          <div class="file-field input-field">
-            <div class="btn">
-              <span>File</span>
-              <input type="file" name="Image">
-            </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" name="imgPath" >
+      <div class="row">
+        <div class="col s12 m4 l8">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="title" type="text" class="validate" name="adTitle">
+              <label for="title">Title </label>
             </div>
           </div>
-    </div>
-
-    <div class="col s12 m4 l8">
-      <div class="row">
-        <div class="input-field col s6">
-          <input id="title" type="text" class="validate" name="adTitle">
-          <label for="title">Title</label>
         </div>
       </div>
-    </div>
-    <div class="col s12 m4 l8">
+
       <div class="row">
-            <div class="row">
-              <div class="input-field col s12">
-                <textarea id="textarea1" class="materialize-textarea" name="adDesc"></textarea>
-                <label for="description">Description</label>
-              </div>
-            </div>
+        <div class="col s12 m4 l8">
+          <div class="row">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea id="textarea1" class="materialize-textarea" name="adDesc"></textarea>
+                    <label for="description">Description</label>
+                  </div>
+                </div>
+          </div>
+        </div>
       </div>
-    </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-        <i class="material-icons right">send</i>
-      </button>
+
+      <div class="row">
+        <div class="col s12 m4 l8">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Image</span>
+                  <input type="hidden" id="avatar-url" name="avatar-url" value="/images/default.png">
+                  <input type="file" id="file-input">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" name="imgPath">
+                </div>
+              </div>
+              <img style="height: 100px; width: 100px;" id="preview" src="/images/default.png">
+        </div>
+      </div>
+
+      <div class="row">
+          <button class="btn waves-effect waves-light" type="submit" value="Update profile" id="form-submit" name="action">Submit
+            <i class="material-icons right">send</i>
+          </button>
+      </div>
     </form>
   </div>
 
+ <!--  <input type="file" id="file-input">
+    <p id="status">Please select a file</p>
+    <img id="preview" src="/images/default.png">
+
+  <form method="POST" action="/ad/create">
+
+    <input type="text" name="username" placeholder="Username"><br>
+    <input type="text" name="full-name" placeholder="Full name"><br><br>
+    <input type="submit" value="Update profile">
+  </form> -->
+
+
+  <script>
+    (() => {
+      document.getElementById("adForm").onsubmit = (e) => {
+        e.preventDefault();
+        const files = document.getElementById('file-input').files;
+        const adTitle = document.getElementById('title').value;
+        const adDesc = document.getElementById('textarea1').value;
+        const file = files[0];
+        if(file == null){
+          return alert('No file selected.');
+        }
+        console.log('get rekt')
+        getSignedRequest(file, adTitle, adDesc);
+        console.log(window.location.host);
+        setTimeout(() =>{
+          window.location.replace('/view');
+        }, 5000);
+      };
+  })
+  ();
+
+    function getSignedRequest(file, adTitle, adDesc){
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', `/ad/create?file-name=${file.name}&file-type=${file.type}&adTitle=${adTitle}&adDesc=${adDesc}`);
+
+      xhr.onreadystatechange = () => {
+        if(xhr.readyState === 4){
+          console.log("XHR", xhr,"THE STATUS IS:", xhr.status)
+          if(xhr.status === 200){
+            console.log('RES', xhr.response, 'TEXT', xhr.responseText)
+            const response = JSON.parse(xhr.responseText);
+            uploadFile(file, response.signedRequest, response.url);
+          }
+          else{
+
+            alert('Could not get signed URL.');
+          }
+        }
+      };
+      xhr.send();
+    }
+
+    function uploadFile(file, signedRequest, url){
+      //
+      const xhr = new XMLHttpRequest();
+      xhr.open('PUT', signedRequest);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.onreadystatechange = () => {
+        if(xhr.readyState === 4){
+
+          if(xhr.status === 200){
+
+            console.log("HIIIIIIIII")
+            document.getElementById('preview').src = url;
+            document.getElementById('avatar-url').value = url;
+            console.log("IS THIS THE URL?", url);
+            // Make a request to save the img_url for the user
+            // Use Ajax
+
+            // $.ajax({
+            //   method: "POST",
+            //   url: "/ad/create"
+            // }).then(() => {
+            //     knex('products').insert([{
+            //       img_path: req.file.filename,
+            //       title: req.body.adTitle,
+            //       desc: req.body.adDesc,
+            //       creator_uid: req.session.userId
+            //     }])
+            //     .then(function(resp) {
+            //        res.redirect("/view")
+            //      })
+            // })
+
+
+          }
+          else{
+
+            alert('Could not upload file.');
+          }
+        }
+      };
+      xhr.send(file);
+    }
+
+
+
+  </script>
+
+
+
+
+
+
   </body>
 </html>
+

@@ -9,69 +9,192 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/styles/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet"/>
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="/scripts/materialize.js"></script>
     <script src="/scripts/init.js"></script>
+
+    <style>
+      body {
+        font-family: 'Dosis', serif;
+        font-size: ;
+      }
+    </style>
   </head>
 
   <body>
-    <nav class="red lighten-1" role="navigation">
+    <nav class="red lighten-1" role="navigation" style="position: fixed; z-index: 1;">
       <div class="nav-wrapper container">
           <a id="logo-container" href="#" class="brand-logo">AdMe</a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
-             <a href="/register/user" class="white-text waves-effect waves-white btn-flat">Register as User</a>
-              <a href="/register/advertiser" class="white-text waves-effect waves-teal btn-flat">Register as Advetiser</a>
+           <!--   <a href="/register/user" class="white-text waves-effect waves-white btn-flat">Register as User</a>
+              <a href="/register/advertiser" class="white-text waves-effect waves-teal btn-flat">Register as Advetiser</a> -->
+              <!-- Modal Trigger -->
+              <button class="waves-effect waves-light btn modal-trigger" data-target="modal1">Register as Advertiser</button>
+              <!-- Modal Trigger -->
+              <button href="#" class="waves-effect waves-light btn modal-trigger" data-target="modal2">Register as User</button>
           </ul>
-          <ul class="side-nav" id="mobile-demo">
-            <li><a href="/register/user">Register as User</a></li>
-            <li><a href="/register/advertiser">Register as Advetiser</a></li>
-          </ul>
+
+
         <!-- <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a> -->
-      </div>
+
+
     </nav>
 
-      <div>
-        <img src="/Image01.jpg" class='responsive-img'>
-      </div>
+    <ul class="side-nav" id="mobile-demo">
+           <!--  <li><a href="/register/user">Register as User</a></li>
+            <li><a href="/register/advertiser">Register as Advetiser</a></li> -->
+            <!-- Modal Trigger -->
+              <li><button class="waves-effect waves-light btn modal-trigger" data-target="modal1">Advertiser</button></li>
+              <!-- Modal Trigger -->
+              <li><button href="#" class="waves-effect waves-light btn modal-trigger" data-target="modal2">User</button></li>
+          </ul>
 
 
-    <div class="container" >
+
+    <div class="container" id="logincall">
       <div class="section">
 
-          <div class="row col s8 valign" id="form-login">
-              <form action="/login" method="POST">
 
-                <div class="row center">
-                  <h5 class="header col s12 light">Login</h5>
-                </div>
-                <div class="row ">
-                  <div class="input-field col s12">
-                    <i class="material-icons mdi-action-lock-outline prefix">email</i>
-                    <input id="email" type="email" name="loginEmail" class="validate">
-                    <label for="email">Email</label>
-                  </div>
-                </div>
-                <div class="row ">
-                  <div class="input-field col s12">
-                    <i class="mdi-action-lock-outline prefix material-icons">lock</i>
-                    <input id="password" type="password" name="loginPassword"class="validate">
-                    <label for="password">Password</label>
-                  </div>
-                </div>
-                <div class="row center"
-                <div>
-                  <button class="btn waves-effect waves-light red" type="submit" name="action">Login
-                  </button>
-                </div>
-              </div>
+      <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+    <div class="section">
+    <div class="row col s8 valign" id="form-register">
+      <form class="col s12" action="/register/advertiser" method="POST">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="first_name" name="advName" type="text" class="validate">
+            <label for="first_name">Name</label>
           </div>
         </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input disabled value="Advertiser" id="disabled" name="roleAdvertiser" type="text" class="validate">
+            <label for="disabled">Role</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="email" type="email" name="advEmail" class="validate">
+            <label for="email">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" type="password" name="advPassword" class="validate">
+            <label for="password">Password</label>
+          </div>
+        </div>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+          <i class="material-icons right">send</i>
+        </button>
+      </form>
+    </div>
+    </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+
+
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <div class="section">
+        <div class="row col s8 valign" id="form-register">
+          <form class="col s12" action="/register/user" method="POST">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="first_name" name="userName" type="text" class="validate">
+                <label for="first_name">Name</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input disabled value="User" name="roleUser" id="disabled" type="text" class="validate">
+                <label for="disabled">Role</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="email" type="email" name="userEmail"class="validate">
+                <label for="email">Email</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="password" type="password" name="userPassword"class="validate">
+                <label for="password">Password</label>
+              </div>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+              <i class="material-icons right">send</i>
+            </button>
+          </form>
+        </div>
       </div>
-      <br><br>
+    </div>
+  </div>
+
+  <div>
+    <img src="/Image01.jpg" class='responsive-img'>
+  </div>
+
+  <br />
+  <br />
+
+  <div class="divider" style="margin-left: 150px; margin-right: 150px "></div>
+
+  <br />
+
+  <h3 class="text" style="text-align: center;">Promote. Earn.</h3>
+  <p style="text-align: center; margin-left: 150px; margin-right: 150px; font-size: 20px; ">AdMe provides advertisers with the most efficient and informative way to promote their products and services while at the same time providing anyone with a social media presence an easy, reliable and quick way to earn money. So join our fast-growing community to Promote and Earn.</p>
+
+
+  <br />
+  <br />
+
+  <div class="divider" style="margin-left: 150px; margin-right: 150px "></div>
+
+  <div class="container" >
+    <div class="section">
+      <div class="row col s8 valign" id="form-login">
+        <form action="/login" method="POST">
+          <div class="row center">
+            <h5 class="header col s12 light">Login</h5>
+          </div>
+          <div class="row ">
+            <div class="input-field col s12">
+              <i class="material-icons mdi-action-lock-outline prefix">email</i>
+              <input id="email" type="email" name="loginEmail" class="validate">
+              <label for="email">Email</label>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="input-field col s12">
+              <i class="mdi-action-lock-outline prefix material-icons">lock</i>
+              <input id="password" type="password" name="loginPassword" class="validate">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row center">
+            <div>
+              <button class="btn waves-effect waves-light red" type="submit" name="action">Login
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <br />
+  <br />
 
 
     <footer class="page-footer red">
@@ -83,23 +206,21 @@
 
 
           </div>
-          <div class="col l3 s12">
+<!--           <div class="col l3 s12">
             <h5 class="white-text">Settings</h5>
-            <ul>
-              <li><a class="white-text" href="#!">Link 1</a></li>
-              <li><a class="white-text" href="#!">Link 2</a></li>
-              <li><a class="white-text" href="#!">Link 3</a></li>
-              <li><a class="white-text" href="#!">Link 4</a></li>
-            </ul>
-          </div>
+          </div> -->
+<!--           <div>
+              <a class="white-text" href="#!">Link 1</a>
+              <a class="white-text" href="#!">Link 2</a>
+              <a class="white-text" href="#!">Link 3</a>
+              <a class="white-text" href="#!">Link 4</a>
+
+          </div> -->
           <div class="col l3 s12">
             <h5 class="white-text">Connect</h5>
-            <ul>
-              <li><a class="white-text" href="#!">Link 1</a></li>
-              <li><a class="white-text" href="#!">Link 2</a></li>
-              <li><a class="white-text" href="#!">Link 3</a></li>
-              <li><a class="white-text" href="#!">Link 4</a></li>
-            </ul>
+
+              <img style="height: 64px;width: 64px" class="circle" src="/liju.png">
+              <img style="height: 64px;width: 64px" class="circle" src="/ben.png">
           </div>
         </div>
       </div>

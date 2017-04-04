@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+
+      <!-- CSS  -->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="/styles/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+      <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+
+      <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+      <script type="text/javascript" src="/scripts/app.js"></script>
+      <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script src="/scripts/materialize.js"></script>
+      <script src="/scripts/init.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js'></script>
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+
+
   </head>
-
   <body>
-    <% include _topnav %>
-   <!--  <ul id="slide-out" class="side-nav fixed">
-      <li><a href="#!">First Sidebar Link</a></li>
-      <li><a href="#!">Second Sidebar Link</a></li>
-    </ul>
-    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a> -->
 
-    <div>
-     <ul id="slide-out" class="side-nav">
-      <li><div class="userView">
-      <div class="background">
-        <img src="https://upload.wikimedia.org/wikipedia/en/e/e0/Iron_Man_bleeding_edge.jpg">
-      </div>
-      <a href="#!name"><span class="white-text name">John Doe</span></a>
-      <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-    </div></li>
-    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-    <li><a href="#!">Second Link</a></li>
-    <li><div class="divider"></div></li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-    </ul>
-    <a href="#" data-activates="slide-out" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
-  </div>
+    <% include partials/_topnav %>
 
-
-  <div class="row">
-    <% for (let each of products) { %>
-      <% include partials/_ads %>
-    <% } %>
-  </div>
+    <div class="row">
+      <% for (let each of products) { %>
+        <% include partials/_ads %>
+      <% } %>
+    </div>
 
   </body>
 </html>

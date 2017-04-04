@@ -16,26 +16,52 @@ const morgan        = require('morgan');
 const knexLogger    = require('knex-logger');
 var bcrypt          = require("bcrypt");
 
+// var fs              = require('file-system');
+var aws             = require('aws-sdk');
+require('dotenv').config()
+//var fs              = require('fs');
+//var Uploader        = require('s3-image-uploader');
+//const WebSocket     = require('ws');
 
 
 
-const usersRoutes = require("./routes/users");
-const viewRoutes = require("./routes/view");
+// aws.config.update({
+//   accessKeyId: 'AKIAJ5LJO4ZHOAPZBUOA',
+//   secretAccesskey: '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'
+// })
+
+
+// var multiparty      = require('connect-multiparty')
+//   var multipartyMiddleware = multiparty();
+
+// var S3FS            = require('s3fs');
+// var s3fsImpl        = new S3FS('admeimagebucket1', {
+//     accessKeyId: 'AKIAJ5LJO4ZHOAPZBUOA',
+//     secretAccesskey: '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'
+// })
+
+// s3fsImpl.create();
+
+const usersRoutes   = require("./routes/users");
+const viewRoutes    = require("./routes/view");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 
+//app.use(multipartyMiddleware);
+
+
 const saltRounds = 10;
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, 'public/ad_img/')
-  },
-  filename: function(req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-const upload = multer({storage: storage})
+// const storage = multer.diskStorage({
+//   destination: function(req, file, cb) {
+//     cb(null, 'public/ad_img/')
+//   },
+//   filename: function(req, file, cb) {
+//     cb(null, file.originalname)
+//   }
+// })
+// const upload = multer({storage: storage})
 app.use(cookieSession({
   name: 'session',
   keys: ['user_id'],
@@ -65,23 +91,98 @@ app.use("/view", viewRoutes(knex));
 
 // Ad creation page
 app.get("/ad/create", (req, res) => {
-  let templateVariable = {
-    path: "/ad/create"
-  };
-  res.render("createads", templateVariable);
+  knex('users')
+    .select('role')
+    .where({
+      id: req.session.userId
+    })
+    .then(function(resp){
+      console.log(resp);
+      let templateVariable = {
+        loggedUser: resp[0]
+      };
+      res.render("createads", templateVariable);
+    })
 });
 
-app.post("/ad/create", upload.single('Image'), (req, res) => {
-  console.log(req.file.filename);
+app.post("/ad/create", /*upload.single('Image'),*/ (req, res) => {
 
-  knex('products').insert([{
-      img_path: req.file.filename,
-      title: req.body.adTitle,
-      desc: req.body.adDesc
-    }])
-    .then(function(resp) {
-      res.send("Ad Created and Added to DB")
-    })
+//res.send("Hi, this works.")
+
+//***************** ORIGINAL *****************
+
+
+//***************** DIFFERENT *****************
+//console.log("THIS IS REQ", req)
+console.log(req.body, "REQ.BODY")
+console.log(req.query, "REQ.QUERY")
+
+  const s3 = new aws.S3({
+    accessKeyId: process.env.AWS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET,
+    region: 'ca-central-1'
+  });
+
+// Access Key ID:
+// AKIAIUAGTLQKSXLES5UA
+// Secret Access Key:
+// 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
+
+
+  console.log(s3)
+  //console.log(s3.config)
+
+  //const S3_BUCKET = ;
+
+  const fileName = req.query['file-name'];
+  const fileType = req.query['file-type'];
+  const advDesc  = req.query['adDesc'];
+  const advTitle = req.query['adTitle'];
+
+  console.log("========fileName", req.query['file-name'])
+
+  const s3Params = {
+    Bucket: 'admeimagebucket1',
+    Key: fileName,
+    Expires: 6000,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      console.log('We hit an error getting the signed url from S3')
+      console.log(err);
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://admeimagebucket1.s3.amazonaws.com/${fileName}`
+    };
+
+    console.log("THIS SHOULD BE THE URL", returnData.url)
+    //KNEX INSERT GOES HERE.
+
+    console.log(req.body.adTitle)
+    console.log("THIS IS DESCRIPTION", req.adDesc)
+    //console.log()
+    console.log("LOOK UP YOU SHIT")
+
+      knex('products').insert([{
+        img_path: returnData.url,
+        title: advTitle,
+        desc:  advDesc,
+        creator_uid: req.session.userId
+      }])
+      .then(function(resp) {
+        console.log(resp)
+        //debugger;
+        res.send(JSON.stringify(returnData))
+        console.log("NEW", resp)
+      })
+
+
+  });
 
 })
 
@@ -100,7 +201,7 @@ app.get("/users/:id/ads", (req, res) => {
         platfom.push(results[i].platform);
        }
        let templateVariable = {
-         path: "/users/:id/ads",
+         loggedUser: 'Advertiser',
          ads: count,
          labels: JSON.stringify(platfom)
        }
@@ -109,14 +210,90 @@ app.get("/users/:id/ads", (req, res) => {
       });
 });
 
+//.raw('SELECT cost, click_count, cost*click_count AS money_earned FROM shared_links WHERE users_id = req.session.userId')
+
+// app.get("/view/stats", (req, res) => {
+// console.log("DOES THIS WORL??")
+//   knex('users')
+//               .join('shared_links', 'users.id', '=', 'shared_links.users_id')
+//               //.join('products', 'users.id', '=', 'shared_links.users_id')
+//               .select('users.name', 'users.email', 'shared_links.cost', 'shared_links.click_count')
+//               .where('users.id', '=', req.session.userId)
+
+//               .then((results) => {
+//                 console.log(results)
+//                 console.log("THE FOLLOWING SHOULD BE THE AMOUNT OF MONEY EARNED", results);
+
+//                 var money = results[0].cost*results[0].click_count;
+//                 console.log(money);
+
+//                 let templateVariable = {
+//                  path: "/view/stats",
+//                  name: results[0].name,
+//                  email: results[0].email,
+//                  moolah: money
+//                 };
+//                 res.render("userstats" ,templateVariable);
+//       })
+// });
 
 
-app.get("/users/:id/stats", (req, res) => {
-  let templateVariable = {
-    path: "/users/:id/stats"
+// app.get('/sign-s3', (req, res) => {
+//   const s3 = new aws.S3({
+//     accessKeyId: "AKIAJFXUGD3IJAWSBUWA",
+//     secretAccessKey: "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",
+//     region: 'ca-central-1'
+//   });
 
-  };
-  res.render("userstats", templateVariable);
+//   console.log(s3)
+//   //console.log(s3.config)
+
+//   //const S3_BUCKET = ;
+
+//   const fileName = req.query['file-name'];
+//   const fileType = req.query['file-type'];
+
+//   const s3Params = {
+//     Bucket: 'admeimagebucket1',
+//     Key: fileName,
+//     Expires: 60,
+//     ContentType: fileType,
+//     ACL: 'public-read'
+//   };
+
+//   s3.getSignedUrl('putObject', s3Params, (err, data) => {
+//     if(err){
+//       console.log('We hit an error getting the signed url from S3')
+//       console.log(err);
+//       return res.end();
+//     }
+//     const returnData = {
+//       signedRequest: data,
+//       url: `https://admeimagebucket1.s3.amazonaws.com/${fileName}`
+//     };
+
+//     console.log("THIS SHOULD BE THE URL", returnData.url)
+//     //KNEX INSERT GOES HERE.
+
+// //***************** ORIGINAL *****************
+// //***************** NEED TO CHANGE THIS. THIS WONT WORK. *****************
+//   knex('products').insert([{
+//       img_path: returnData.url,
+//       title: req.body.adTitle,
+//       desc: req.body.adDesc,
+//       creator_uid: req.session.userId
+//     }])
+//     .then(function(resp) {
+//       res.redirect("/view")
+//     })
+
+//     res.status(200).json(returnData);
+//   });
+// });
+
+app.post('/save-details', (req, res) => {
+  // TODO: Read POSTed form data and do something useful
+  res.send("Hi, this works.")
 });
 
 app.listen(PORT, () => {

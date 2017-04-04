@@ -11,7 +11,7 @@
     
     <!-- Fonts  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
@@ -27,9 +27,11 @@
     <% include partials/_topnav %>
 
     <div class="row">
+      <br>
       <% for (let each of products) { %>
         <% include partials/_ads %>
       <% } %>
     </div>
+
   </body>
 </html>

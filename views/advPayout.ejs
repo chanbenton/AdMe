@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>AdMe</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/scripts/fb_api.js" ></script>
+
+    <!-- Fonts  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+
+    <!-- CSS file to overwrite Materialize, if necessary
+    <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection" /> -->
+
+  </head>
+
+  <body style="padding: 13px">
+      <table class="highlight bordered" style="border: 1px solid black;">
+          <thead class="teal">
+            <tr>
+                <th>Name</th>
+                <th>Ad-ID</th>
+                <th>Title</th>
+                <th>Platform</th>
+                <th>Total</th>
+            </tr>
+          </thead>
+          <% for (let each of details) { %>
+            <tbody class="teal lighten-4">
+              <tr>
+                <td><%=each.name%></td>
+                <td><%=each.products_id%></td>
+                <td><%=each.title%></td>
+                <td><%=each.platform%></td>
+                <td><%=each.total%></td>
+              </tr>
+            </tbody>
+          <% } %>
+        </table>
+  </body>
+</html>

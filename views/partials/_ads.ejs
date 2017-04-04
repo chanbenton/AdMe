@@ -1,17 +1,18 @@
-<div class="col s4">
-  <div class="card">
-    <div class="card-image waves-effect waves-block waves-light" style="height:325px;">
-      <img class="activator" src="/ad_img/<%= each.img_path %>">
-    </div>
+<div class="col s3">
+  <div class="card hoverable grey lighten-5" style="min-width:200px;">
+    <a href="/view/ads/<%= each.id %>">
+
+      <div class="card-image waves-effect waves-block waves-light" style="background:url('<%= each.img_path %>') center center no-repeat; background-size: contain; height: 200px; width: 100%;">
+      <!-- <img style="width:100%; height:auto; margin: 0 auto;"class="activator" src="/ad_img/<%= each.img_path %>"> -->
+      </div>
+    </a>
     <div class="card-content">
       <!-- expand_less points up, even though this button expands MORE-->
-      <span class="card-title activator grey-text text-darken-4"><%= each.title %><i class="material-icons right">expand_less</i></span>
-      <p><%= each.desc %></p>
-    </div>
-    <div class="card-reveal">
-      <!-- expand_more points down, even though this button expands LESS-->
-      <span class="card-title grey-text text-darken-4"><%= each.title %><i class="material-icons right">expand_more</i></span>
-      <p>Share icons will be inserted here</p>
+      <div class="row">
+        <div class="col 12"><span class="card-title activator grey-text text-darken-4"><%= each.title %></span></div>
+
+      </div>
+      <!-- <span class="card-title activator grey-text text-darken-4">Shared to <%= each.platform %> -->
     </div>
   </div>
 </div>

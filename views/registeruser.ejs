@@ -15,41 +15,40 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="/scripts/materialize.js"></script>
     <script src="/scripts/init.js"></script>
-    <% include _topnav.ejs %>
   </head>
 
   <body>
-
+    <% include partials/_topnav %>
     <div class="row">
-    <form class="col s8" action="/register/user" method="POST">
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="first_name" name="userName" type="text" class="validate">
-          <label for="first_name">Name</label>
+      <form class="col s8" action="/register/user" method="POST">
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="first_name" name="userName" type="text" class="validate">
+            <label for="first_name">Name</label>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input disabled value="User" name="roleUser" id="disabled" type="text" class="validate">
-          <label for="disabled">Role</label>
+        <div class="row">
+          <div class="input-field col s12">
+            <input disabled value="User" name="roleUser" id="disabled" type="text" class="validate">
+            <label for="disabled">Role</label>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="email" type="email" name="userEmail"class="validate">
-          <label for="email">Email</label>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="email" type="email" name="userEmail"class="validate">
+            <label for="email">Email</label>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="password" type="password" name="userPassword"class="validate">
-          <label for="password">Password</label>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" type="password" name="userPassword"class="validate">
+            <label for="password">Password</label>
+          </div>
         </div>
-      </div>
-      <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-        <i class="material-icons right">send</i>
-      </button>
-    </form>
-  </div>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+          <i class="material-icons right">send</i>
+        </button>
+      </form>
+    </div>
   </body>
 </html>
