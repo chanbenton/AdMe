@@ -135,12 +135,52 @@ app.get("/refer/:sl_id", (req, res) => {
         console.log("updated", results)
         knex("shared_links").where({id: shareId}).update("click_count", product.click_count)
         .then(()=> {
-          res.redirect(`/view/${product.id}`)
+          let p_id = results[0].products_id;
+          let u_id = req.session.userId;
+          let empty_id = {id: null};
+
+          knex("products").select("*").where({id: p_id})
+            .then((results) => {
+              if (results.length === 0) {
+                res.sendStatus(500);
+                return;
+              }
+              let product = results[0];
+              
+              if (u_id) {
+                knex.raw(`INSERT INTO shared_links (products_id, users_id, platform, cost, click_count)
+                  VALUES (${p_id}, ${u_id}, 'FB', 1.10, 0), (${p_id} ,${u_id}, 'TW', 0.5, 0)
+                  ON CONFLICT ("products_id", "users_id", "platform") DO NOTHING`)
+                .then (() => {
+                  knex("shared_links").select("id").where({products_id: p_id, users_id: u_id})
+                    .then((sl_list) => {
+                      console.log(sl_list[0], sl_list[1]);
+                      let templateVars = {
+                        product: product,
+                        path: "/view",
+                        shareFb: sl_list[0],
+                        shareTw: sl_list[1],
+                        user: 1
+                      }
+                      res.render("productPage", templateVars);
+                  });
+                });
+              } else {
+                let templateVars = {
+                    product: product,
+                    path: "/view",
+                    shareFb: empty_id,
+                    shareTw: empty_id,
+                    user: 0
+                }
+                res.render("productPage", templateVars);
+              }
+          });
         });
       } else {
         res.sendStatus(500);
       }
-    })
+    })  
 });
 
 app.listen(PORT, () => {
