@@ -47,89 +47,103 @@
 
     <div class="row">
 
-    <form class="col s12" action="/ad/create" method="POST" enctype="multipart/form-data">
+    <form class="col s12" id="adForm" action="/ad/create" method="POST" >
 
-  <div class="row">
-    <div class="col s12 m4 l8">
       <div class="row">
-        <div class="input-field col s12">
-          <input id="title" type="text" class="validate" name="adTitle">
-          <label for="title">Title </label>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col s12 m4 l8">
-      <div class="row">
-            <div class="row">
-              <div class="input-field col s12">
-                <textarea id="textarea1" class="materialize-textarea" name="adDesc"></textarea>
-                <label for="description">Description</label>
-              </div>
-            </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col s12 m4 l8">
-          <div class="file-field input-field">
-            <div class="btn">
-              <span>Image</span>
-              <input type="file">
-            </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" name="imgPath">
+        <div class="col s12 m4 l8">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="title" type="text" class="validate" name="adTitle">
+              <label for="title">Title </label>
             </div>
           </div>
-    </div>
-  </div>
+        </div>
+      </div>
 
-  <div class="row">
-      <button class="btn waves-effect waves-light" type="submit" value="Update profile" name="action">Submit
-        <i class="material-icons right">send</i>
-      </button>
-  </div>
+      <div class="row">
+        <div class="col s12 m4 l8">
+          <div class="row">
+                <div class="row">
+                  <div class="input-field col s12">
+                    <textarea id="textarea1" class="materialize-textarea" name="adDesc"></textarea>
+                    <label for="description">Description</label>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12 m4 l8">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Image</span>
+                  <input type="hidden" id="avatar-url" name="avatar-url" value="/images/default.png">
+                  <input type="file" id="file-input">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" name="imgPath">
+                </div>
+              </div>
+              <img style="height: 100px; width: 100px;" id="preview" src="/images/default.png">
+        </div>
+      </div>
+
+      <div class="row">
+          <button class="btn waves-effect waves-light" type="submit" value="Update profile" id="form-submit" name="action">Submit
+            <i class="material-icons right">send</i>
+          </button>
+      </div>
     </form>
   </div>
 
-  <input type="file" id="file-input">
+ <!--  <input type="file" id="file-input">
     <p id="status">Please select a file</p>
     <img id="preview" src="/images/default.png">
 
   <form method="POST" action="/ad/create">
-    <input type="hidden" id="avatar-url" name="avatar-url" value="/images/default.png">
+
     <input type="text" name="username" placeholder="Username"><br>
     <input type="text" name="full-name" placeholder="Full name"><br><br>
     <input type="submit" value="Update profile">
-  </form>
+  </form> -->
 
 
   <script>
     (() => {
-      document.getElementById("file-input").onchange = () => {
+      document.getElementById("adForm").onsubmit = (e) => {
+        e.preventDefault();
         const files = document.getElementById('file-input').files;
+        const adTitle = document.getElementById('title').value;
+        const adDesc = document.getElementById('textarea1').value;
         const file = files[0];
         if(file == null){
           return alert('No file selected.');
         }
-        getSignedRequest(file);
+        console.log('get rekt')
+        getSignedRequest(file, adTitle, adDesc);
+        console.log(window.location.host);
+        setTimeout(() =>{
+          window.location.replace('/view');
+        }, 5000);
       };
   })
   ();
 
-    function getSignedRequest(file){
+    function getSignedRequest(file, adTitle, adDesc){
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+      xhr.open('POST', `/ad/create?file-name=${file.name}&file-type=${file.type}&adTitle=${adTitle}&adDesc=${adDesc}`);
+
       xhr.onreadystatechange = () => {
         if(xhr.readyState === 4){
+          console.log("XHR", xhr,"THE STATUS IS:", xhr.status)
           if(xhr.status === 200){
+            console.log('RES', xhr.response, 'TEXT', xhr.responseText)
             const response = JSON.parse(xhr.responseText);
             uploadFile(file, response.signedRequest, response.url);
           }
           else{
+
             alert('Could not get signed URL.');
           }
         }
@@ -138,13 +152,15 @@
     }
 
     function uploadFile(file, signedRequest, url){
-      //debugger
+      //
       const xhr = new XMLHttpRequest();
       xhr.open('PUT', signedRequest);
       xhr.setRequestHeader('Content-Type', file.type);
       xhr.onreadystatechange = () => {
         if(xhr.readyState === 4){
+
           if(xhr.status === 200){
+
             console.log("HIIIIIIIII")
             document.getElementById('preview').src = url;
             document.getElementById('avatar-url').value = url;
@@ -168,11 +184,9 @@
             // })
 
 
-
-
           }
           else{
-            //debugger
+
             alert('Could not upload file.');
           }
         }
@@ -191,3 +205,4 @@
 
   </body>
 </html>
+

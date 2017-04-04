@@ -105,59 +105,76 @@ app.get("/ad/create", (req, res) => {
 
 app.post("/ad/create", /*upload.single('Image'),*/ (req, res) => {
 
-res.send("Hi, this works.")
+//res.send("Hi, this works.")
 
 //***************** ORIGINAL *****************
-  // knex('products').insert([{
-  //     img_path: req.file.filename,
-  //     title: req.body.adTitle,
-  //     desc: req.body.adDesc,
-  //     creator_uid: req.session.userId
-  //   }])
-  //   .then(function(resp) {
-  //     res.redirect("/view")
-  //   })
+
 
 //***************** DIFFERENT *****************
+//console.log("THIS IS REQ", req)
+console.log(req.body, "REQ.BODY")
+console.log(req.query, "REQ.QUERY")
 
-  // const s3 = new aws.S3({
-  //   accessKeyId: "AKIAJFXUGD3IJAWSBUWA",
-  //   secretAccessKey: "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",
-  //   region: 'ca-central-1'
-  // });
+  const s3 = new aws.S3({
+    accessKeyId: "AKIAICCDE5LICDU2A2HA",
+    secretAccessKey: "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",
+    region: 'ca-central-1'
+  });
 
-  // console.log(s3)
-  // //console.log(s3.config)
+  console.log(s3)
+  //console.log(s3.config)
 
-  // //const S3_BUCKET = ;
+  //const S3_BUCKET = ;
 
-  // const fileName = req.query['file-name'];
-  // const fileType = req.query['file-type'];
+  const fileName = req.query['file-name'];
+  const fileType = req.query['file-type'];
+  const advDesc  = req.query['adDesc'];
+  const advTitle = req.query['adTitle'];
 
-  // const s3Params = {
-  //   Bucket: 'admeimagebucket1',
-  //   Key: fileName,
-  //   Expires: 60,
-  //   ContentType: fileType,
-  //   ACL: 'public-read'
-  // };
+  console.log("========fileName", req.query['file-name'])
 
-  // s3.getSignedUrl('putObject', s3Params, (err, data) => {
-  //   if(err){
-  //     console.log('We hit an error getting the signed url from S3')
-  //     console.log(err);
-  //     return res.end();
-  //   }
-  //   const returnData = {
-  //     signedRequest: data,
-  //     url: `https://admeimagebucket1.s3.amazonaws.com/${fileName}`
-  //   };
+  const s3Params = {
+    Bucket: 'admeimagebucket1',
+    Key: fileName,
+    Expires: 6000,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
 
-  //   console.log("THIS SHOULD BE THE URL", returnData.url)
-  //   //KNEX INSERT GOES HERE.
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      console.log('We hit an error getting the signed url from S3')
+      console.log(err);
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      url: `https://admeimagebucket1.s3.amazonaws.com/${fileName}`
+    };
 
-  //   res.status(200).json(returnData);
-  // });
+    console.log("THIS SHOULD BE THE URL", returnData.url)
+    //KNEX INSERT GOES HERE.
+
+    console.log(req.body.adTitle)
+    console.log("THIS IS DESCRIPTION", req.adDesc)
+    //console.log()
+    console.log("LOOK UP YOU SHIT")
+
+      knex('products').insert([{
+        img_path: returnData.url,
+        title: advTitle,
+        desc:  advDesc,
+        creator_uid: req.session.userId
+      }])
+      .then(function(resp) {
+        console.log(resp)
+        //debugger;
+        res.send(JSON.stringify(returnData))
+        console.log("NEW", resp)
+      })
+
+
+  });
 
 })
 
@@ -212,58 +229,58 @@ console.log("DOES THIS WORL??")
       })
 });
 
-app.get('/sign-s3', (req, res) => {
-  const s3 = new aws.S3({
-    accessKeyId: "AKIAJFXUGD3IJAWSBUWA",
-    secretAccessKey: "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",
-    region: 'ca-central-1'
-  });
+// app.get('/sign-s3', (req, res) => {
+//   const s3 = new aws.S3({
+//     accessKeyId: "AKIAJFXUGD3IJAWSBUWA",
+//     secretAccessKey: "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",
+//     region: 'ca-central-1'
+//   });
 
-  console.log(s3)
-  //console.log(s3.config)
+//   console.log(s3)
+//   //console.log(s3.config)
 
-  //const S3_BUCKET = ;
+//   //const S3_BUCKET = ;
 
-  const fileName = req.query['file-name'];
-  const fileType = req.query['file-type'];
+//   const fileName = req.query['file-name'];
+//   const fileType = req.query['file-type'];
 
-  const s3Params = {
-    Bucket: 'admeimagebucket1',
-    Key: fileName,
-    Expires: 60,
-    ContentType: fileType,
-    ACL: 'public-read'
-  };
+//   const s3Params = {
+//     Bucket: 'admeimagebucket1',
+//     Key: fileName,
+//     Expires: 60,
+//     ContentType: fileType,
+//     ACL: 'public-read'
+//   };
 
-  s3.getSignedUrl('putObject', s3Params, (err, data) => {
-    if(err){
-      console.log('We hit an error getting the signed url from S3')
-      console.log(err);
-      return res.end();
-    }
-    const returnData = {
-      signedRequest: data,
-      url: `https://admeimagebucket1.s3.amazonaws.com/${fileName}`
-    };
+//   s3.getSignedUrl('putObject', s3Params, (err, data) => {
+//     if(err){
+//       console.log('We hit an error getting the signed url from S3')
+//       console.log(err);
+//       return res.end();
+//     }
+//     const returnData = {
+//       signedRequest: data,
+//       url: `https://admeimagebucket1.s3.amazonaws.com/${fileName}`
+//     };
 
-    console.log("THIS SHOULD BE THE URL", returnData.url)
-    //KNEX INSERT GOES HERE.
+//     console.log("THIS SHOULD BE THE URL", returnData.url)
+//     //KNEX INSERT GOES HERE.
 
-//***************** ORIGINAL *****************
-//***************** NEED TO CHANGE THIS. THIS WONT WORK. *****************
-  knex('products').insert([{
-      img_path: returnData.url,
-      title: req.body.adTitle,
-      desc: req.body.adDesc,
-      creator_uid: req.session.userId
-    }])
-    .then(function(resp) {
-      res.redirect("/view")
-    })
+// //***************** ORIGINAL *****************
+// //***************** NEED TO CHANGE THIS. THIS WONT WORK. *****************
+//   knex('products').insert([{
+//       img_path: returnData.url,
+//       title: req.body.adTitle,
+//       desc: req.body.adDesc,
+//       creator_uid: req.session.userId
+//     }])
+//     .then(function(resp) {
+//       res.redirect("/view")
+//     })
 
-    res.status(200).json(returnData);
-  });
-});
+//     res.status(200).json(returnData);
+//   });
+// });
 
 app.post('/save-details', (req, res) => {
   // TODO: Read POSTed form data and do something useful
