@@ -38,12 +38,15 @@ module.exports = (knex) => {
       knex("users")
         .join("shared_links", "users.id", "=", "shared_links.users_id")
         .join("products", "products.id", "=", "shared_links.products_id")
-        .select("users.name", "shared_links.products_id", "shared_links.click_count", "shared_links.cost", "shared_links.platform")
+        .select("users.name", "shared_links.products_id", "shared_links.click_count", "shared_links.cost", "shared_links.platform", "products.title")
         .where("creator_uid", "=", req.session.userId)
         .then((results) => {
-          console.log(results);
+          results = results.map((product)=>{
+            product.total = product.click_count * product.cost;
+            return product;
+          })
           let templateVars = {
-            details: results
+            details: results,
           }
           res.render("advPayout",templateVars)
         })
@@ -127,7 +130,6 @@ module.exports = (knex) => {
             .select("*")
             .where( 'shared_links.products_id', '=', p_id)
             .then((results) => {
-              console.log('Inside Results',results.length);
               if(results.length == 0){
                 knex("products")
                   .select("*")
@@ -177,6 +179,22 @@ module.exports = (knex) => {
         }
       });
   });
+
+  routes.get("/delete/:product_id", (req, res) => {
+    console.log(req.params.product_id);
+    knex('shared_links')
+      .where('products_id', req.params.product_id)
+      .del()
+      .then((results) => {
+        knex('products')
+          .where('id', req.params.product_id)
+          .del()
+          .then((rows) => {
+            console.log("Row deleted");
+            res.redirect("/view")
+          })
+      })
+  })
 
   // routes.get("/:product_id/share/fb", (req, res) => {
   //   let p_id = req.params.product_id;

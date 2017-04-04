@@ -15,6 +15,7 @@ const knex          = require("knex")(knexConfig[ENV]);
 const morgan        = require('morgan');
 const knexLogger    = require('knex-logger');
 var bcrypt          = require("bcrypt");
+
 // var fs              = require('file-system');
 var aws             = require('aws-sdk');
 require('dotenv').config()
@@ -236,6 +237,7 @@ console.log("DOES THIS WORL??")
       })
 });
 
+
 // app.get('/sign-s3', (req, res) => {
 //   const s3 = new aws.S3({
 //     accessKeyId: "AKIAJFXUGD3IJAWSBUWA",
@@ -293,9 +295,6 @@ app.post('/save-details', (req, res) => {
   // TODO: Read POSTed form data and do something useful
   res.send("Hi, this works.")
 });
-
-
-
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
