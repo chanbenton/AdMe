@@ -211,5 +211,19 @@ module.exports = (knex) => {
   // });
 
 
+  routes.get('/:sl_id', (req, res) => {
+    var sharedId = req.params.sl_id;
+    knex
+        .select("click_count")
+        .from("shared_links")
+        .where('id','=','sharedId')
+        .then((results) => {
+          console.log("original", results)
+          results[0] += 1;
+          console.log("updated", results)
+          knex("shared_links").update("click_count", results[0])
+        })
+  })
+
   return routes;
 }

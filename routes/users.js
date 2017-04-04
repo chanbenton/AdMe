@@ -30,6 +30,7 @@ module.exports = (knex) => {
     .then(function(resp){
       req.session.userId = resp[0];
       res.redirect("/view")
+      //res.send("THIS WORKED!")
     })
   });
 
