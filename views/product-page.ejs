@@ -5,13 +5,13 @@
     <meta name="twitter:site" content="@AdMe">
     <meta name="twitter:title" content="<%= product.title %>">
     <meta name="twitter:description" content="<%= product.desc %>">
-    <meta name="twitter:image" content="http://graphics8.nytimes.com/images/2012/02/19/us/19whitney-span/19whitney-span-articleLarge.jpg">
+    <meta name="twitter:image" content="<%= product.img_path %>">
 
     <meta property="og:url"           content="adme-app.herokuapp.com/view/<%= product.id %>" />
     <meta property="og:type"          content="website" />
     <meta property="og:title"         content="<%= product.title %>" />
     <meta property="og:description"   content="<%= product.desc %>" />
-    <meta property="og:image"         content="https://img.clipartfox.com/6a7ba8a6429e1b6ae50adb34acee6957_nature-google-the-vineyard-google-clipart-nature_1600-1200.jpeg" />
+    <meta property="og:image"         content="<%= product.img_path %>" />
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -57,7 +57,7 @@
                 </a>
               </div>
               <a class="twitter-share-button"
-                href="https://twitter.com/intent/tweet?text=<%= product.title %> - &url=https%3A%2F%2Fadme-app.herokuhost.com%2Frefer%2F%3Fid%3D<%= shareTw.id %>">
+                href="https://twitter.com/intent/tweet?text=<%= product.title %> - &url=https%3A%2F%2Fadme-app.herokuapp.com%2Frefer%2F%= shareTw.id %>">
                 Tweet
               </a>
           </div>
