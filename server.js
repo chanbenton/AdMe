@@ -123,10 +123,7 @@ console.log(req.query, "REQ.QUERY")
     region: 'ca-central-1'
   });
 
-// Access Key ID:
-// AKIAIUAGTLQKSXLES5UA
-// Secret Access Key:
-// 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
+
 
 
   console.log(s3)
@@ -291,10 +288,10 @@ app.get("/users/:id/ads", (req, res) => {
 //   });
 // });
 
-app.post('/save-details', (req, res) => {
-  // TODO: Read POSTed form data and do something useful
-  res.send("Hi, this works.")
-});
+// app.post('/save-details', (req, res) => {
+//   // TODO: Read POSTed form data and do something useful
+//   res.send("Hi, this works.")
+// });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
