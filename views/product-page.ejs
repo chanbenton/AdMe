@@ -39,25 +39,27 @@
                 <div class="medium-6 columns">
                     <h3><%= product.title %></h3>
                   <img class="thumbnail" src="<%= product.img_path %>">
+                </div>
+                <div class="columns medium-6">
                   <h4>Description</h4>
                   <hr>
                   <p><%= product.desc %></p>
+                  <br>
+                  <br>
+                  <div class="fb-share-button"
+                    data-href="https://adme-app.herokuapp.com/refer/<%= shareFb.id %>"
+                    data-layout="button_count"
+                    data-mobile-iframe="true">
+                      <a class="fb-xfbml-parse-ignore"
+                      target="_blank"
+                      href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fadme-app.herokuhost.com%2Frefer%2F<%= shareFb.id %>&amp;src=sdkpreparse">Share</a>
+                  </div>
+                  <a class="twitter-share-button"
+                    href="https://twitter.com/intent/tweet?text=<%= product.title %>&url=https%3A%2F%2Fadme-app.herokuapp.com%2Frefer%2F<%= shareTw.id %>">
+                    Tweet
+                  </a>
                 </div>
-                  <br>
-                  <br>
-              <div class="fb-share-button"
-                data-href="https://adme-app.herokuapp.com/refer/<%= shareFb.id %>"
-                data-layout="button_count"
-                data-mobile-iframe="true">
-                  <a class="fb-xfbml-parse-ignore"
-                  target="_blank"
-                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fadme-app.herokuhost.com%2Frefer%2F<%= shareFb.id %>&amp;src=sdkpreparse">Share</a>
               </div>
-              <a class="twitter-share-button"
-                href="https://twitter.com/intent/tweet?text=<%= product.title %>&url=https%3A%2F%2Fadme-app.herokuapp.com%2Frefer%2F<%= shareTw.id %>">
-                Tweet
-              </a>
-        </div>
         <% } else if (loggedUser == "Advertiser") { %>
           <div class="row">
             <div class="medium-6 columns">
@@ -140,6 +142,8 @@
         <div class="medium-6 columns">
             <h3><%= product.title %></h3>
           <img class="thumbnail" src="<%= product.img_path %>">
+        </div>
+        <div class="columns medium-6">
           <h4>Description</h4>
           <hr>
           <p><%= product.desc %></p>
