@@ -207,80 +207,66 @@ app.get("/users/:id/ads", (req, res) => {
       });
 });
 
+
 app.get("/refer/:sl_id", (req, res) => {
-  knex('products')
+  let shareId = req.params.sl_id;
+
+  knex
     .select("*")
-    .where("id", req.params.sl_id)
+    .from("shared_links")
+    .where({id: shareId})
     .then((results) => {
-      let product = results[0];
-      let templateVars = {
-        product: product,
-        loggedUser: 'Guest'
+      if (results.length !== 0) {
+        let product = results[0];
+        console.log("original", results)
+        product.click_count += 1;
+        console.log("updated", results)
+        knex("shared_links").where({id: shareId}).update("click_count", product.click_count)
+        .then(()=> {
+          let p_id = results[0].products_id;
+          let u_id = req.session.userId;
+          let empty_id = {id: null};
+
+          knex("products").select("*").where({id: p_id})
+            .then((results) => {
+              if (results.length === 0) {
+                res.sendStatus(500);
+                return;
+              }
+              let product = results[0];
+
+              if (u_id) {
+                knex.raw(`INSERT INTO shared_links (products_id, users_id, platform, cost, click_count)
+                  VALUES (${p_id}, ${u_id}, 'FB', 1.10, 0), (${p_id} ,${u_id}, 'TW', 0.5, 0)
+                  ON CONFLICT ("products_id", "users_id", "platform") DO NOTHING`)
+                .then (() => {
+                  knex("shared_links").select("id").where({products_id: p_id, users_id: u_id})
+                    .then((sl_list) => {
+                      console.log(sl_list[0], sl_list[1]);
+                      let templateVars = {
+                        product: product,
+                        shareFb: sl_list[0],
+                        shareTw: sl_list[1],
+                      }
+                      res.render("product-page", templateVars);
+                  });
+                });
+              } else {
+                let templateVars = {
+                    product: product,
+                    loggedUser: 'Guest',
+                    shareFb: empty_id,
+                    shareTw: empty_id,
+                }
+                res.render("product-page", templateVars);
+              }
+          });
+        });
+      } else {
+        res.sendStatus(500);
       }
-      res.render("product-page", templateVars)
     })
 });
-
-
-// app.get("/refer/:sl_id", (req, res) => {
-//   let shareId = req.params.sl_id;
-//
-//   knex
-//     .select("*")
-//     .from("shared_links")
-//     .where({id: shareId})
-//     .then((results) => {
-//       if (results.length !== 0) {
-//         let product = results[0];
-//         console.log("original", results)
-//         product.click_count += 1;
-//         console.log("updated", results)
-//         knex("shared_links").where({id: shareId}).update("click_count", product.click_count)
-//         .then(()=> {
-//           let p_id = results[0].products_id;
-//           let u_id = req.session.userId;
-//           let empty_id = {id: null};
-//
-//           knex("products").select("*").where({id: p_id})
-//             .then((results) => {
-//               if (results.length === 0) {
-//                 res.sendStatus(500);
-//                 return;
-//               }
-//               let product = results[0];
-//
-//               if (u_id) {
-//                 knex.raw(`INSERT INTO shared_links (products_id, users_id, platform, cost, click_count)
-//                   VALUES (${p_id}, ${u_id}, 'FB', 1.10, 0), (${p_id} ,${u_id}, 'TW', 0.5, 0)
-//                   ON CONFLICT ("products_id", "users_id", "platform") DO NOTHING`)
-//                 .then (() => {
-//                   knex("shared_links").select("id").where({products_id: p_id, users_id: u_id})
-//                     .then((sl_list) => {
-//                       console.log(sl_list[0], sl_list[1]);
-//                       let templateVars = {
-//                         product: product,
-//                         shareFb: sl_list[0],
-//                         shareTw: sl_list[1],
-//                       }
-//                       res.render("product-page", templateVars);
-//                   });
-//                 });
-//               } else {
-//                 let templateVars = {
-//                     product: product,
-//                     loggedUser: 'Guest',
-//                     shareFb: empty_id,
-//                     shareTw: empty_id,
-//                 }
-//                 res.render("product-page", templateVars);
-//               }
-//           });
-//         });
-//       } else {
-//         res.sendStatus(500);
-//       }
-//     })
-// });
 
 
 //.raw('SELECT cost, click_count, cost*click_count AS money_earned FROM shared_links WHERE users_id = req.session.userId')

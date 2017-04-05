@@ -115,8 +115,8 @@ module.exports = (knex) => {
             let templateVars = {
               loggedUser: users[0].role,
               product: product,
-              shareFb: {id: product.id},
-              shareTw: {id: product.id}
+              shareFb: {id: product.id, userid: users[0].id},
+              shareTw: {id: product.id, userid: users[0].id}
              }
              if (results.length > 0){
                res.render("product-page", templateVars);
