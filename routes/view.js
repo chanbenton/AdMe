@@ -103,7 +103,7 @@ module.exports = (knex) => {
 
     let p_id = req.params.product_id;
     var count = [];
-    var platfom = []
+    var platfom = [];
     knex("users").select("*").where("id", '=', req.session.userId ).then((users) => {
       console.log('users',users);
       if(users[0].role == 'User'){
@@ -154,13 +154,20 @@ module.exports = (knex) => {
                   })
                 }
               let product = results[0];
+              let fbCount = 0;
+              let twCount = 0;
               for (var i = 0; i < results.length; i++){
-               count.push(results[i].click_count)
-               platfom.push(results[i].platform);
+                if(results[i].platform == 'FB'){
+                  fbCount += results[i].click_count;
+                } else {
+                  twCount += results[i].click_count
+                }
               }
+              count.push(fbCount);
+              count.push(twCount);
               let templateVars = {
                 loggedUser: user.role,
-                labels: JSON.stringify(platfom),
+                //labels: JSON.stringify(platfom),
                 ads: count,
                 product: product,
                 shareFb: {id: 0},
