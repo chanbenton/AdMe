@@ -242,7 +242,7 @@ app.get("/refer/:sl_id", (req, res) => {
                     console.log(sl_list[0], sl_list[1]);
                     let templateVars = {
                       product: product,
-                      loggedUser: 'User'
+                      loggedUser: 'User',
                       shareFb: sl_list[0],
                       shareTw: sl_list[1],
                     }
