@@ -216,8 +216,9 @@ app.get("/refer/:sl_id", (req, res) => {
         product: product,
         loggedUser: 'Guest'
       }
-    res.render("product-page", templateVars)
-})
+      res.render("product-page", templateVars)
+    })
+)};
 
 
 // app.get("/refer/:sl_id", (req, res) => {
