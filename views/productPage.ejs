@@ -4,10 +4,16 @@
   <head>
     <title>AdMe</title>
 
-    <meta property="og:url"           content="http://127.0.0.1:8080" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@AdMe">
+    <meta name="twitter:title" content="<%= product.title %>">
+    <meta name="twitter:description" content="<%= product.desc %>">
+    <meta name="twitter:image" content="http://graphics8.nytimes.com/images/2012/02/19/us/19whitney-span/19whitney-span-articleLarge.jpg">
+
+    <meta property="og:url"           content="adme-app.herokuapp.com/view/<%= product.id %>" />
     <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="Awesomesauce" />
-    <meta property="og:description"   content="Testrun" />
+    <meta property="og:title"         content="<%= product.title %>" />
+    <meta property="og:description"   content="<%= product.desc %>" />
     <meta property="og:image"         content="https://img.clipartfox.com/6a7ba8a6429e1b6ae50adb34acee6957_nature-google-the-vineyard-google-clipart-nature_1600-1200.jpeg" />
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -32,10 +38,14 @@
   </head>
 
   <body>
+
+    <% include partials/_topnav %>
+
     <div class="row">
       <div class="col s12 m6 l4" >
         <img src="/ad_img/<%= product.img_path %>" style="height:325px;">
       </div>
+
       <div class="container">
         <div class="section">
           <h5>Name</h5>
@@ -53,8 +63,19 @@
         </div>
       </div>
         <% if (loggedUser == "User") { %>
-          <div class="fb-share-button" data-href="http://127.0.0.1:8080/" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A8080%2F&amp;src=sdkpreparse">Share to FB</a></div>
-          <a href="https://twitter.com/intent/tweet?text=<%= product.title %> - <%= product.desc %>&url=http://127.0.0.1:8080">Twitter</a>
+          
+          <div class="fb-share-button"
+          data-href="https://adme-app.herokuapp.com/refer/?id=<%= product.id %>"
+          data-layout="button_count"
+          data-mobile-iframe="true">
+            <a class="fb-xfbml-parse-ignore"
+            target="_blank"
+            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fadme-app.herokuhost.com%2Frefer%2F%3Fid%3D<%= shareFb.id %>&amp;src=sdkpreparse">Share</a>
+          </div>
+          <a class="twitter-share-button"
+            href="https://twitter.com/intent/tweet?text=<%= product.title %> - <%= product.desc %>&url=https%3A%2F%2Fadme-app.herokuhost.com%2Frefer%2F%3Fid%3D<%= shareTw.id %>">
+          Tweet</a>
+            
         <% } else if (loggedUser == "Advertiser") { %>
           <div style="width:400px; height:400px;"><canvas id="myChart" width="500" height="500"></canvas></div>
           <script>
@@ -98,6 +119,7 @@
           </script>
 
           <% } %>
+>>>>>>> 0a56ff5a951596a397421c22bd57d3c0fceb9d87
       </div>
     </div>
 
