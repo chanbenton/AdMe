@@ -132,6 +132,7 @@ module.exports = (knex) => {
             .select("*")
             .where( 'shared_links.products_id', '=', p_id)
             .then((results) => {
+              console.log("Results", results);
               if(results.length == 0){
                 knex("products")
                   .select("*")
@@ -152,6 +153,7 @@ module.exports = (knex) => {
                      }
                   })
                 }
+              let product = results[0];
               for (var i = 0; i < results.length; i++){
                count.push(results[i].click_count)
                platfom.push(results[i].platform);
@@ -161,7 +163,8 @@ module.exports = (knex) => {
                 labels: JSON.stringify(platfom),
                 ads: count,
                 product: product,
-                path: fb_path,
+                shareFb: {id: 0},
+                shareTw: {id: 0},
                 path2: "asdf"
               }
               if (results.length > 0){

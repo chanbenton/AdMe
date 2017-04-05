@@ -31,26 +31,19 @@
 
     <br>
     <!-- You can now combine a row and column if you just need a 12 column row -->
-    <div class="row">
-      <div class="medium-6 columns">
-          <h3><%= product.title %></h3>
-        <img class="thumbnail" src="<%= product.img_path %>">
-        <h4>Description</h4>
-        <hr>
-        <p><%= product.desc %></p>
-      </div>
-      <div class="medium-6 large-5 columns">
 
-        <div class="row">
-          <br>
-          <br>
-          <br>
-        </div>
         <% if (loggedUser == "User") { %>
               <br>
               <br>
-              <!-- <a class="button medium expanded">Share on Facebook</a>
-              <a class="button medium expanded">Share on Twitter</a> -->
+              <div class="row">
+                <div class="medium-6 columns">
+                    <h3><%= product.title %></h3>
+                  <img class="thumbnail" src="<%= product.img_path %>">
+                  <h4>Description</h4>
+                  <hr>
+                  <p><%= product.desc %></p>
+                </div>
+                <div class="medium-6 large-5 columns">
 
               <div class="fb-share-button"
                 data-href="https://adme-app.herokuapp.com/refer/<%= shareFb.id %>"
@@ -65,9 +58,19 @@
                 Tweet
               </a>
           </div>
-    </div>
-        <% } if (loggedUser == "Advertiser") { %>
-            <div class="column row">
+        </div>
+        <% } else if (loggedUser == "Advertiser") { %>
+          <div class="row">
+            <div class="medium-6 columns">
+                <h3><%= product.title %></h3>
+              <img class="thumbnail" src="<%= product.img_path %>">
+              <h4>Description</h4>
+              <hr>
+              <p><%= product.desc %></p>
+            </div>
+            <br>
+            <br>
+            <div class="columns medium-6">
               <br>
               <div id="chartjs-bar-chart" class="section">
                 <h4 class="header">Bar Chart</h4>
