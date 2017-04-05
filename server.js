@@ -211,11 +211,11 @@ app.get("/refer/:sl_id", (req, res) => {
   knex('products')
     .select("*")
     .where("id", req.params.sl_id)
-}).then((results) => {
-    let templateVars = {
-      product: product,
-      loggedUser: 'Guest'
-    }
+    .then((results) => {
+      let templateVars = {
+        product: product,
+        loggedUser: 'Guest'
+      }
     res.render("product-page", templateVars)
 })
 
