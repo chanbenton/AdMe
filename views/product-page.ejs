@@ -129,6 +129,17 @@
         </div>
       <% } %>
 
+      <%  if (loggedUser == 'Guest') { %>
+      <div class="row">
+        <div class="medium-6 columns">
+            <h3><%= product.title %></h3>
+          <img class="thumbnail" src="<%= product.img_path %>">
+          <h4>Description</h4>
+          <hr>
+          <p><%= product.desc %></p>
+        </div>
+      </div>
+        <% } %>
 
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="http://dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.js"></script>
