@@ -218,7 +218,7 @@ app.get("/refer/:sl_id", (req, res) => {
       }
       res.render("product-page", templateVars)
     })
-)};
+});
 
 
 // app.get("/refer/:sl_id", (req, res) => {
