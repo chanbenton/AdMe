@@ -222,7 +222,7 @@ app.get("/refer/:sl_id", (req, res) => {
         product.click_count += 1;
         console.log("updated", results)
         knex("shared_links").where({id: shareId}).update("click_count", product.click_count)
-        .then(()=> {
+        .then(() => {
           let p_id = results[0].products_id;
           let u_id = req.session.userId;
           let empty_id = {id: null};
@@ -230,26 +230,23 @@ app.get("/refer/:sl_id", (req, res) => {
           knex("products").select("*").where({id: p_id})
             .then((results) => {
               if (results.length === 0) {
+                console.log("No product found")
                 res.sendStatus(500);
                 return;
               }
               let product = results[0];
 
               if (u_id) {
-                knex.raw(`INSERT INTO shared_links (products_id, users_id, platform, cost, click_count)
-                  VALUES (${p_id}, ${u_id}, 'FB', 1.10, 0), (${p_id} ,${u_id}, 'TW', 0.5, 0)
-                  ON CONFLICT ("products_id", "users_id", "platform") DO NOTHING`)
-                .then (() => {
-                  knex("shared_links").select("id").where({products_id: p_id, users_id: u_id})
-                    .then((sl_list) => {
-                      console.log(sl_list[0], sl_list[1]);
-                      let templateVars = {
-                        product: product,
-                        shareFb: sl_list[0],
-                        shareTw: sl_list[1],
-                      }
-                      res.render("product-page", templateVars);
-                  });
+                knex("shared_links").select("id").where({products_id: p_id, users_id: u_id})
+                  .then((sl_list) => {
+                    console.log(sl_list[0], sl_list[1]);
+                    let templateVars = {
+                      product: product,
+                      loggedUser: 'User'
+                      shareFb: sl_list[0],
+                      shareTw: sl_list[1],
+                    }
+                    res.render("product-page", templateVars);
                 });
               } else {
                 let templateVars = {
@@ -263,6 +260,7 @@ app.get("/refer/:sl_id", (req, res) => {
           });
         });
       } else {
+        console.log("No such referral ID")
         res.sendStatus(500);
       }
     })
