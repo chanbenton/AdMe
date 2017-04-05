@@ -212,6 +212,7 @@ app.get("/refer/:sl_id", (req, res) => {
     .select("*")
     .where("id", req.params.sl_id)
     .then((results) => {
+      let product = results[0];
       let templateVars = {
         product: product,
         loggedUser: 'Guest'
