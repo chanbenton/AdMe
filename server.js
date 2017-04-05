@@ -122,10 +122,7 @@ console.log(req.query, "REQ.QUERY")
     region: 'ca-central-1'
   });
 
-// Access Key ID:
-// AKIAIUAGTLQKSXLES5UA
-// Secret Access Key:
-// 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
+
 
 
   console.log(s3)
@@ -289,10 +286,10 @@ console.log("DOES THIS WORL??")
 //   });
 // });
 
-app.post('/save-details', (req, res) => {
-  // TODO: Read POSTed form data and do something useful
-  res.send("Hi, this works.")
-});
+// app.post('/save-details', (req, res) => {
+//   // TODO: Read POSTed form data and do something useful
+//   res.send("Hi, this works.")
+// });
 
 
 
