@@ -43,8 +43,8 @@
                   <hr>
                   <p><%= product.desc %></p>
                 </div>
-                <div class="medium-6 large-5 columns">
-
+                  <br>
+                  <br>
               <div class="fb-share-button"
                 data-href="https://adme-app.herokuapp.com/refer/<%= shareFb.id %>"
                 data-layout="button_count"
@@ -57,7 +57,6 @@
                 href="https://twitter.com/intent/tweet?text=<%= product.title %>&url=https%3A%2F%2Fadme-app.herokuapp.com%2Frefer%2F<%= shareTw.id %>">
                 Tweet
               </a>
-          </div>
         </div>
         <% } else if (loggedUser == "Advertiser") { %>
           <div class="row">
