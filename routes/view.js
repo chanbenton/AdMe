@@ -114,7 +114,9 @@ module.exports = (knex) => {
             let product = results[0];
             let templateVars = {
               loggedUser: users[0].role,
-              product: product
+              product: product,
+              shareFb: {id: product.id},
+              shareTw: {id: product.id}
              }
              if (results.length > 0){
                res.render("product-page", templateVars);
@@ -196,6 +198,50 @@ module.exports = (knex) => {
       })
   })
 
+  routes.get("/:product_id", (req, res) => {
+
+    let p_id = req.params.product_id;
+    let u_id = req.session.userId;
+
+    knex("products").select("*").where({id: p_id})
+      .then((results) => {
+        if (results.length === 0) {
+          res.sendStatus(500);
+          return;
+        }
+        let product = results[0];
+        let empty_id = {id: null};
+        if (u_id) {
+          knex.raw(`INSERT INTO shared_links (products_id, users_id, platform, cost, click_count)
+            VALUES (${p_id}, ${u_id}, 'FB', 1.10, 0), (${p_id} ,${u_id}, 'TW', 0.5, 0)
+            ON CONFLICT ("products_id", "users_id", "platform") DO NOTHING`)
+          .then (() => {
+            knex("shared_links").select("id").where({products_id: p_id, users_id: u_id})
+              .then((sl_list) => {
+                console.log(sl_list[0], sl_list[1]);
+                let templateVars = {
+                  product: product,
+                  loggedUser:'User',
+                  shareFb: sl_list[0],
+                  shareTw: sl_list[1],
+                  user: 1
+                }
+                res.render("product-page", templateVars);
+            });
+          });
+        } else {
+          let templateVars = {
+              product: product,
+              loggedUser: 'User',
+              shareFb: empty_id,
+              shareTw: empty_id,
+              user: 0
+          }
+          res.render("product-page", templateVars);
+        }
+    });
+});
+
   // routes.get("/:product_id/share/fb", (req, res) => {
   //   let p_id = req.params.product_id;
   //   let userId = req.session.user_id;
@@ -229,19 +275,7 @@ module.exports = (knex) => {
   // });
 
 
-  routes.get('/:sl_id', (req, res) => {
-    var sharedId = req.params.sl_id;
-    knex
-        .select("click_count")
-        .from("shared_links")
-        .where('id','=','sharedId')
-        .then((results) => {
-          console.log("original", results)
-          results[0] += 1;
-          console.log("updated", results)
-          knex("shared_links").update("click_count", results[0])
-        })
-  })
+
 
   return routes;
 }
