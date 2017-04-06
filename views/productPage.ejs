@@ -4,124 +4,80 @@
   <head>
     <title>AdMe</title>
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@AdMe">
-    <meta name="twitter:title" content="<%= product.title %>">
-    <meta name="twitter:description" content="<%= product.desc %>">
-    <meta name="twitter:image" content="http://graphics8.nytimes.com/images/2012/02/19/us/19whitney-span/19whitney-span-articleLarge.jpg">
-
-    <meta property="og:url"           content="adme-app.herokuapp.com/view/<%= product.id %>" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="<%= product.title %>" />
-    <meta property="og:description"   content="<%= product.desc %>" />
-    <meta property="og:image"         content="https://img.clipartfox.com/6a7ba8a6429e1b6ae50adb34acee6957_nature-google-the-vineyard-google-clipart-nature_1600-1200.jpeg" />
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/scripts/fb_api.js" ></script>
-
-    <!-- Fonts  -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adme</title>
+    <script type="text/javascript" src="/scripts/share_api.js" ></script>
+    <link rel="stylesheet" href="//dhbhdrzi4tiry.cloudfront.net/cdn/sites/foundation.min.css">
     <!-- CSS file to overwrite Materialize, if necessary
     <link href="/styles/style.css" type="text/css" rel="stylesheet" media="screen,projection" /> -->
 
   </head>
 
   <body>
-
-    <% include partials/_topnav %>
-
     <div class="row">
-      <div class="col s12 m6 l4" >
-        <img src="/ad_img/<%= product.img_path %>" style="height:325px;">
+      <div class="medium-6 columns">
+          <h3><%= product.title %></h3>
+        <img class="thumbnail" src="<%= product.img_path %>">
+        <h4>Description</h4>
+        <hr>
+        <p><%= product.desc %></p>
       </div>
-
-      <div class="container">
-        <div class="section">
-          <h5>Name</h5>
-          <p><%= product.title %></p>
-        </div>
-        <div class="divider"></div>
-        <div class="section">
-          <h5>Description</h5>
-          <p><%= product.desc %></p>
-        </div>
-        <div class="divider"></div>
-        <div class="section">
-          <h5>Total Views</h5>
-          <p><%= product.click_count %></p>
-        </div>
-      </div>
-        <% if (loggedUser == "User") { %>
-          
-          <div class="fb-share-button"
-          data-href="https://adme-app.herokuapp.com/refer/?id=<%= product.id %>"
-          data-layout="button_count"
-          data-mobile-iframe="true">
-            <a class="fb-xfbml-parse-ignore"
-            target="_blank"
-            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fadme-app.herokuhost.com%2Frefer%2F%3Fid%3D<%= shareFb.id %>&amp;src=sdkpreparse">Share</a>
-          </div>
-          <a class="twitter-share-button"
-            href="https://twitter.com/intent/tweet?text=<%= product.title %> - <%= product.desc %>&url=https%3A%2F%2Fadme-app.herokuhost.com%2Frefer%2F%3Fid%3D<%= shareTw.id %>">
-          Tweet</a>
-            
-        <% } else if (loggedUser == "Advertiser") { %>
-          <div style="width:400px; height:400px;"><canvas id="myChart" width="500" height="500"></canvas></div>
-          <script>
-            var ctx = document.getElementById("myChart");
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: <%-labels%>,
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [<%=ads %>],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero:true
-                            }
+      <br>
+      <br>
+      <div class="columns medium-6">
+        <br>
+        <div id="chartjs-bar-chart" class="section">
+          <h4 class="header">Bar Chart</h4>
+          <div class="col s12 m8 l9">
+            <div class="sample-chart-wrapper">
+              <div style="width:400px; height:250px;"><canvas id="myChart" width="554" height="350"></canvas></div>
+              <script>
+                var ctx = document.getElementById("myChart");
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Facebook', 'Twitter'],
+                        datasets: [{
+                            label: '# of clicks',
+                            data: [<%=ads %>],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255,99,132,1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
                         }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
                     }
-                }
-            });
-          </script>
-
-          <% } %>
->>>>>>> 0a56ff5a951596a397421c22bd57d3c0fceb9d87
+                });
+              </script>
+            </div>
+          </div>
+    </section>
+  </div>
       </div>
-    </div>
+      <br>
+      <br>
 
   </body>
 </html>

@@ -99,6 +99,8 @@ module.exports = (knex) => {
   });
 
 
+
+
   routes.get("/ads/:product_id", (req, res) => {
 
     let p_id = req.params.product_id;
@@ -106,25 +108,7 @@ module.exports = (knex) => {
     var platfom = [];
     knex("users").select("*").where("id", '=', req.session.userId ).then((users) => {
       console.log('users',users);
-      if(users[0].role == 'User'){
-        knex("products")
-          .select("*")
-          .where("id", "=", p_id)
-          .then((results) => {
-            let product = results[0];
-            let templateVars = {
-              loggedUser: users[0].role,
-              product: product,
-              shareFb: {id: product.id, userid: users[0].id},
-              shareTw: {id: product.id, userid: users[0].id}
-             }
-             if (results.length > 0){
-               res.render("product-page", templateVars);
-             } else {
-               res.sendStatus(500);
-             }
-          })
-      } else {
+
           let user = users[0];
           knex("products")
             .join('shared_links', 'products.id', '=', 'shared_links.products_id' )
@@ -132,27 +116,35 @@ module.exports = (knex) => {
             .select("*")
             .where( 'shared_links.products_id', '=', p_id)
             .then((results) => {
-              console.log("Results", results);
+              console.log("Results Length", results.length);
               if(results.length == 0){
                 knex("products")
                   .select("*")
                   .where("id", "=", p_id)
-                  .then((results) => {
-                    console.log("inside", results);
-                    let product = results[0];
+                  .then((rows) => {
+                    console.log("inside", rows);
+                    let product = rows[0];
                     let templateVars = {
                       ads: 0,
                       labels: 0,
                       loggedUser: user.role,
-                       product: product
+                      shareFb: {id: 0},
+                      shareTw: {id: 0},
+                      product: product
                      }
-                     if (results.length > 0){
+                     console.log(rows.length);
+                     if (rows.length > 0){
+                       console.log("inside if state");
                        res.render("product-page", templateVars);
+                       return;
                      } else {
+                       console.log("indise esle");
                        res.sendStatus(500);
+                       return;
                      }
                   })
-                }
+                } else {
+                console.log("Hdjkashdkj");
               let product = results[0];
               let fbCount = 0;
               let twCount = 0;
@@ -177,10 +169,11 @@ module.exports = (knex) => {
               if (results.length > 0){
                 res.render("product-page", templateVars);
               } else {
+                console.log("inside another else");
                 res.sendStatus(500);
               }
+            }
           });
-        }
       });
   });
 
