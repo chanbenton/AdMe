@@ -80,7 +80,7 @@ module.exports = (knex) => {
         knex("users")
           .join('shared_links', 'users.id', '=', 'shared_links.users_id')
           .select('users.role','users.name','users.email','shared_links.click_count','shared_links.cost')
-          //.groupBy('products.id','shared_links.id','users.id')
+          .where('shared_links.users_id', '=', req.session.userId)
           .then((results) => {
             let moolah = 0;
             results.forEach( function(value, index){
